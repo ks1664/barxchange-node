@@ -1,0 +1,741 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <%- include('../headerfiles') %>
+    <script>
+        function readandpreview(fileobj, imageid) {
+            var firstfile = fileobj.files[0];
+            var reader = new FileReader();
+            reader.onload = (function (f) {
+                return function read(e) {
+                    document.getElementById(imageid).src = e.target.result;
+                }
+            })(firstfile);
+            reader.readAsDataURL(firstfile);
+        }
+
+        function readandpreview2(fileobj, imageid) {
+            var firstfile = fileobj.files[0];
+            var reader = new FileReader();
+            reader.onload = (function (f) {
+                return function read(e) {
+                    document.getElementById(imageid).src = e.target.result;
+                }
+            })(firstfile);
+            reader.readAsDataURL(firstfile);
+        }
+    </script>
+</head>
+<body>
+<%- include('adminheader') %>
+
+<br>
+<br>
+<div class="container">
+    <div class="main-sec"></div>
+
+    <div class="row justify-content-center">
+        <h1>Manage Product</h1>
+    </div>
+
+    <div class="row justify-content-center">
+        <a href="#" id="plus" class="open-button" onclick="openForm()"><i class="fa fa-5x fa-plus-square"></i></a>
+    </div>
+    <div class="row justify-content-center">
+        <a href="#" id="minus" class="open-button" style="display: none" onclick="closeForm()"><i
+                    class="fa fa-5x fa-minus-square"></i></a>
+    </div>
+    <div class="form-popup" id="myform">
+        <form id="addform" method="post" enctype="multipart/form-data">
+            <div class="col-sm-12 form-group">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="category" class="">Category</label>
+                            <select data-rule-required="true" name="category" class="input-field" id="category"
+                                    onchange="onchangecategory(this.value)">
+                                <option value="">Select Category</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="subcategory" class="">Sub Category</label>
+                            <select name="subcategory" data-rule-required="true" class="input-field" id="subcategory">
+                                <option value="">Select Sub Category</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 offset-1">
+                        <img style="height: 200px;width: 200px;border-top-style: dotted;border-bottom-style: dotted;border-left-style:dotted;border-right-style: dotted" src="../photo/download.jpg" id="showimg" alt="">
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="photo">Cover Photo</label>
+                            <input type="file" onchange="readandpreview(this,'showimg')" class="input-field"
+                                   name="photo"
+                                   id="photo" data-rule-required="true"
+                                   data-rule-extension="jpg|png|gif">
+                        </div>
+                        <div class="form-group">
+                            <label for="stock">Stock</label>
+                            <input data-rule-required="true" type="number" class="input-field" name="stock"
+                                   placeholder="Enter Stock"
+                                   id="stock">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row form-group">
+
+            </div>
+            <div class="row form-group">
+                <div class="col-sm-6">
+                    <label for="productname" class="">Product Name</label>
+                    <input data-rule-required="true" type="text" class="input-field" placeholder="product name"
+                           name="productname" id="productname">
+                </div>
+                <div class="col-sm-3">
+                    <label for="price">Price</label>
+                    <input data-rule-required="true" type="number" class="input-field" placeholder="Enter Price"
+                           name="price" id="price">
+                </div>
+                <div class="col-sm-3">
+                    <label for="discount">Discount (in %)</label>
+                    <input data-rule-required="true" type="number" class="input-field" placeholder="enter Discount"
+                           name="discount" id="discount">
+                </div>
+            </div>
+            <div class="row form-group">
+                <label for="description" class="">Description</label>
+                <textarea data-rule-required="true" name="description" placeholder="enter description" id="description"
+                          class="input-field" rows="5"></textarea>
+            </div>
+            <div class="row input-container justify-content-around">
+                <button type="button" name="addproduct" onclick="add_product()" class="btn btn-success w-25">Submit
+                </button>
+                <input type="hidden" name="action" id="action" value="add">
+            </div>
+        </form>
+
+
+    </div>
+    <div class="row justify-content-center">
+        <h4 id="output" class="text-primary"></h4>
+    </div>
+    <div class="row mb-2">
+        <div class="offset-2 mt-4 col-sm-3">
+            <h4>Select Category</h4>
+            <select name="categoryname" id="categoryname" class="input-field" data-rule-required="true"
+                    data-msg-required="Category must be selected" onchange="onchangecategory(this.value)">
+                <option value="">Select Category</option>
+            </select>
+        </div>
+        <div class="offset-2 mt-4 col-sm-3">
+            <h4>Select Sub Category</h4>
+            <select name="subcategoryname" id="subcategoryname" class="input-field" data-rule-required="true"
+                    data-msg-required="Category must be selected" onchange="filterproduct(this.value)">
+                <option value="">Select Type</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="table-responsive" id="">
+        <table id="myproduct" class="table tablemera table-bordered">
+            <thead class="text-center">
+            <tr>
+                <th>Sr&nbsp;No.</th>
+                <th>Product&nbsp;Name</th>
+                <th>Price</th>
+                <th>Stock</th>
+                <th>Discount</th>
+                <th>Photo</th>
+                <th>Sub&nbsp;Category</th>
+                <th>Category</th>
+                <th>Super&nbsp;Category</th>
+                <th>Delete</th>
+                <th>Edit</th>
+                <th>Add&nbsp;Pics</th>
+                <th>View&nbsp;Pics</th>
+            </tr>
+            </thead>
+            <tbody id="tableforproduct"></tbody>
+        </table>
+    </div>
+    <!-- The Modal -->
+    <div class="modal fade" id="myModalforproduct">
+        <div class="modal-dialog modal-lg modal-md modal-sm">
+            <div class="modal-content">
+                <form action="" method="post" id="updateform">
+                    <!-- Modal Header -->
+                    <div class="modal-header justify-content-center">
+                        <div class="row">
+                            <div class="col-sm-8 display-4">Edit Product</div>
+                            <div class="col-sm-4">
+                                <img src="" id="editphotoimg" style="height: 150px;width: 200px" alt="">
+                            </div>
+                        </div>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <div class="row input-container">
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <label for="editcategory" class="">Category</label>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <input type="text" readonly class="input-field" name="editcategory"
+                                               id="editcategory">
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-sm-6" id="">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <label for="editsubcategory" class="">Sub Category</label>
+
+                                    </div>
+                                    <div class="col-sm-8" id="subcategory">
+                                        <input type="hidden" readonly id="editsubcategoryid" name="editsubcategoryid">
+                                        <input type="text" readonly class="input-field" id="editsubcategoryname"
+                                               name="editsubcategoryname">
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div class="row input-container">
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <label for="editproductname" class="">Product Name</label>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <input type="hidden" class="input-field" name="editproductid"
+                                               id="editproductid">
+                                        <input type="text" class="input-field" name="editproductname"
+                                               id="editproductname">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <label for="editphoto">Photo</label>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input type="file" onchange="readandpreview(this,'editphotoimg')"
+                                               class="input-field" name="editphoto" id="editphoto"
+                                               data-rule-extension="jpg|png|gif">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row input-container">
+                            <div class="col-sm-4">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <label for="editprice" class="">Price</label>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <input type="tel" class="input-field" name="editprice" id="editprice">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-8">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <label for="editdiscount">Discount</label>
+                                            </div>
+                                            <div class="col-sm-8">
+                                                <input type="tel" class="input-field" name="editdiscount"
+                                                       placeholder="in %"
+                                                       id="editdiscount">
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <label for="editstock">Stock</label>
+                                            </div>
+                                            <div class="col-sm-8">
+                                                <input type="number" class="input-field" name="editstock"
+                                                       id="editstock">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row input-container">
+                            <div class="col-sm-2">
+                                <label for="editdescription" class="">Description</label>
+                            </div>
+                            <div class="col-sm-10">
+                                <textarea name="editdescription" id="editdescription" class="input-field" cols="50"
+                                          rows="5"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="button" onclick="update_product()" name="updateproduct"
+                                class="btn btn-danger">Save
+                            Changes
+                        </button>
+                        <input type="hidden" value="edit" id="edit" name="action">
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="myModalforphoto">
+        <div class="modal-dialog modal-lg modal-sm">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Add Product Photo</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form method="post" enctype="multipart/form-data" id="addphoto">
+                        <div class="row input-container">
+                            <div class="col-sm-5">
+                                <label for="preview">Preview</label>
+                            </div>
+                            <div class="col-sm-5 ml-5">
+                                <img src="../photo/download.jpg" id="preview" style="width: 200px;height: 200px" alt="">
+                            </div>
+                        </div>
+                        <div class="row input-container">
+                            <div class="col-sm-5">
+                                <label for="pphoto">Photo</label>
+                            </div>
+                            <div class="col-sm-5 ml-5">
+                                <input type="file" onchange="readandpreview(this,'preview')"
+                                       data-rule-extension="jpg|png|gif" class="input-field"
+                                       data-rule-required="true" name="pphoto" id="pphoto">
+                            </div>
+                        </div>
+                        <div class="row input-container">
+                            <div class="col-sm-5">
+                                <label for="caption">Caption</label>
+                            </div>
+                            <div class="col-sm-5 ml-5">
+                                <input type="hidden" name="pid" id="pid" readonly>
+                                <input type="text" class="input-field" data-rule-required="true" name="caption"
+                                       id="caption">
+                            </div>
+
+                        </div>
+                        <div class="row input-container">
+                            <div class="col-sm-5"></div>
+                            <div class="col-sm-5 ml-5">
+                                <button type="button" onclick="savephoto()" name="photosave"
+                                        class="btn btn-primary">Save Photo
+                                </button>
+                                <input type="hidden" value="addphoto" name="action" id="addphotoaction">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="myModalforphototable">
+        <div class="modal-dialog modal-lg modal-sm">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">View Product Photo</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body" style="max-height: 500px;overflow: auto">
+                    <table class="table table-striped table-bordered" id="myproductphoto">
+                        <thead class="text-center">
+                        <tr>
+                            <th>Sr no.</th>
+                            <th>Product Name</th>
+                            <th>Photo</th>
+                            <th>Delete Pic.</th>
+                        </tr>
+                        </thead>
+                        <tbody id="tableforphoto">
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+<%- include('../footer') %>
+<script src="../datatable/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" href="../datatable/jquery.dataTables.css">
+<script>
+    var temptable;
+
+    function movenextfunction() {
+        document.getElementById('output').innerHTML = "";
+    }
+
+
+    function onchangecategory(categoryname) {
+        let formdata = new FormData();
+        formdata.append("action", "filterview");
+        formdata.append("categoryname", categoryname);
+        var xml = new XMLHttpRequest();
+        xml.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var ar = JSON.parse(this.response);
+                var tab = "";
+                var srno = 1;
+                for (var x in ar) {
+                    obj = ar[x];
+                    tab += "<option value='" + obj.subcategoryid + "'>" + srno + ". " + obj.subcategoryname + " (" + obj.category + ")</option>";
+                    srno++;
+                }
+                document.getElementById("subcategory").innerHTML = tab;
+                document.getElementById("subcategoryname").innerHTML = tab;
+            } else {
+                document.getElementById("subcategory").innerHTML = "<span class='spinner-border'></span>";
+                document.getElementById("subcategoryname").innerHTML = "<span class='spinner-border'></span>";
+            }
+        };
+        xml.open("POST", "./productaction", true);
+        xml.send(formdata);
+    }
+
+
+
+    function add_product() {
+        if ($("#addform").valid()) {
+            var controls = document.getElementById("addform").elements;
+            var formdata = new FormData();
+            for (var i = 0; i < controls.length; i++) {
+                if (controls[i].type == "file") {
+                    formdata.append(controls[i].name, controls[i].files[0]);
+                } else {
+                    formdata.append(controls[i].name, controls[i].value);
+                }
+            }
+            var xml = new XMLHttpRequest();
+            xml.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    var output = this.responseText;
+                    document.getElementById("output").innerHTML = output;
+                    document.getElementById("addform").reset();
+                    document.getElementById("showimg").innerHTML = "";
+                    viewproduct();
+                    setInterval("movenextfunction()", 5000);
+                }
+            };
+            xml.open("POST", "./productaction", true);
+            xml.send(formdata);
+        }
+    }
+
+    function savephoto() {
+        if ($("#addphoto").valid()) {
+            var controls = document.getElementById("addphoto").elements;
+            var formdata = new FormData();
+            for (var i = 0; i < controls.length; i++) {
+                if (controls[i].type == "file") {
+                    formdata.append(controls[i].name, controls[i].files[0]);
+                } else {
+                    formdata.append(controls[i].name, controls[i].value);
+                }
+            }
+            var xml = new XMLHttpRequest();
+            xml.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    var output = this.responseText;
+                    document.getElementById("output").innerHTML = output;
+                    document.getElementById("addphoto").reset();
+                    document.getElementById("showimg").innerHTML = "";
+                    $("#myModalforphoto").modal('hide');
+                    viewproduct();
+                    setInterval("movenextfunction()", 5000);
+                }
+            };
+            xml.open("POST", "./productaction", true);
+            xml.send(formdata);
+        }
+    }
+
+    function viewproduct() {
+        let formdata = new FormData();
+        formdata.append("action", "view");
+        var xml = new XMLHttpRequest();
+        xml.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                // alert("122");
+                var ar = JSON.parse(this.response);
+                var tab = "";
+                var srno = 1;
+                for (var x in ar) {
+                    obj = ar[x];
+                    tab += "<tr>";
+                    tab += "<td>" + srno + "</td>";
+                    tab += "<td>" + obj.productname + "</td>";
+                    tab += "<td>" + obj.price + "</td>";
+                    tab += "<td>" + obj.stock + "</td>";
+                    tab += "<td>" + obj.discount + "</td>";
+                    tab += "<td><img style='height: 200px;width: 200px' src='../" + obj.photo + "' alt=''><span style=\"cursor: pointer;color: #327dff;font-weight: bold;\" title='" + obj.description + "'>View&nbsp;Description</span>\n</td>";
+                    tab += "<td>" + obj.subcategoryname + "</td>";
+                    tab += "<td>" + obj.category + "</td>";
+                    tab += "<td>" + obj.supercategory + "</td>";
+                    tab += "<td><i onclick='deleteproduct(\"" + obj.productid + "\")'" + " class='fa fa-trash text-danger' style='cursor: pointer;'></i></td>";
+                    tab += "<td><i onclick='editproduct(" + JSON.stringify(obj) + ")'" + " class='fa fa-edit text-warning' style='cursor: pointer;'></i></td>";
+                    tab += "<td><i onclick='addphoto(\"" + obj.productid + "\")'" + " class='fa fa-plus text-danger' aria-hidden='true' style='cursor: pointer;'></i></td>";
+                    tab += "<td><i onclick='viewproductphoto(\"" + obj.productid + "\")'" + " class='fa fa-photo text-danger' style='cursor: pointer;'></i></td>";
+                    tab += "</tr>";
+                    srno++;
+                }
+                document.getElementById("tableforproduct").innerHTML = tab;
+                try {
+                    if (temptable != undefined) {
+                        temptable.destroy();
+                    }
+                    temptable = $("#myproduct").dataTable({
+                        // "bPaginate": false
+                    });
+                } catch (e) {
+                }
+            } else {
+                document.getElementById("tableforproduct").innerHTML = "<span class='spinner-border'></span>";
+            }
+        };
+        xml.open("POST", "./productaction", true);
+        xml.send(formdata);
+    }
+
+
+    function viewproductphoto(productid) {
+        let formdata = new FormData();
+        formdata.append("action", "viewphoto");
+        formdata.append("productid", productid);
+        var xml = new XMLHttpRequest();
+        xml.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var ar = JSON.parse(this.response);
+                // console.log(ar);
+                // alert(ar);
+                var tab = "";
+                var srno = 1;
+                for (var x in ar) {
+                    obj = ar[x];
+                    tab += "<tr>";
+                    tab += "<td>" + srno + "</td>";
+                    tab += "<td>" + obj.productname + "</td>";
+                    tab += "<td><img style='height: 200px;width: 250px' src='../" + obj.photo + "' alt=''><span style=\"cursor: pointer;color: #327dff;font-weight: bold;\" title='" + obj.caption + "'>View&nbsp;Description</span>\n</td>";
+                    tab += "<td><i onclick='deleteproductphoto(\"" + obj.id + "\")'" + " class='fa fa-trash text-danger' style='cursor: pointer;'></i></td>";
+                    tab += "</tr>";
+                    srno++;
+                }
+                // tab +="</tbody>";
+                // tab +="</table>";
+                document.getElementById("tableforphoto").innerHTML = tab;
+                $("#myModalforphototable").modal("show");
+                try {
+                    if (temptable != undefined) {
+                        temptable.destroy();
+                    }
+                    temptable = $("#myproductphoto").dataTable({
+                        // "bPaginate": false
+                    });
+                } catch (e) {
+                }
+            } else {
+                document.getElementById("tableforphoto").innerHTML = "<span class='spinner-border'></span>";
+            }
+        };
+        xml.open("POST", "./productaction", true);
+        xml.send(formdata);
+    }
+
+    function editproduct(obj) {
+        // console.log(obj);
+        $("#myModalforproduct").modal("show");
+        document.getElementById("editproductid").value = obj.productid;
+        document.getElementById("editproductname").value = obj.productname;
+        document.getElementById("editprice").value = obj.price;
+        document.getElementById("editstock").value = obj.stock;
+        document.getElementById("editdiscount").value = obj.discount;
+        document.getElementById("editphotoimg").src = "../"+obj.photo;
+        document.getElementById("editdescription").value = obj.description;
+        document.getElementById("editsubcategoryid").value = obj.subcategoryid;
+        document.getElementById("editsubcategoryname").value = obj.subcategoryname;
+        document.getElementById("editcategory").value = obj.category;
+    }
+
+    function addphoto(productid) {
+        // console.log(productid);
+        $("#myModalforphoto").modal("show");
+        document.getElementById("pid").value = productid;
+    }
+
+    function update_product() {
+        if ($("#updateform").valid()) {
+            var controls = document.getElementById("updateform").elements;
+            var formdata = new FormData();
+            for (var i = 0; i < controls.length; i++) {
+                if (controls[i].type == "file") {
+                    formdata.append(controls[i].name, controls[i].files[0]);
+                } else {
+                    formdata.append(controls[i].name, controls[i].value);
+                }
+            }
+            var xml = new XMLHttpRequest();
+            xml.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    viewproduct();
+                    alert(this.response);
+                    $("#myModalforproduct").modal('hide');
+                }
+            };
+            xml.open("POST", "./productaction", true);
+            xml.send(formdata);
+        }
+    }
+
+    function deleteproduct(productid) {
+        var cc = confirm("Are you sure to delete ?");
+        if (cc) {
+            let formdata = new FormData();
+            formdata.append("action", "delete");
+            formdata.append("productid", productid);
+            var httpreg = new XMLHttpRequest();
+            httpreg.onreadystatechange = function () {
+                if (this.status == 200 && this.readyState == 4) {
+                    alert(this.responseText);
+                    $("#myModalforproduct").modal('hide');
+                    viewproduct();
+
+                }
+            };
+            httpreg.open("POST", "./productaction", true);
+            httpreg.send(formdata);
+        }
+    }
+
+    function deleteproductphoto(productphotoid) {
+        var cc = confirm("Are you sure to delete photo ?");
+        if (cc) {
+            let formdata = new FormData();
+            formdata.append("action", "deletephoto");
+            formdata.append("productphotoid", productphotoid);
+            var httpreg = new XMLHttpRequest();
+            httpreg.onreadystatechange = function () {
+                if (this.status == 200 && this.readyState == 4) {
+                    alert(this.responseText);
+                    $("#myModalforphototable").modal('hide');
+                    viewproduct();
+                }
+            };
+            httpreg.open("POST", "./productaction", true);
+            httpreg.send(formdata);
+        }
+    }
+
+    function showcategory() {
+        let formdata = new FormData();
+        formdata.append("action", "view");
+        var xml = new XMLHttpRequest();
+        xml.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var ar = JSON.parse(this.response);
+                console.log(ar);
+                var tab = "";
+                var tab = "<option value=''>Select Category</option>";
+                var srno = 1;
+                for (var x in ar) {
+                    obj = ar[x];
+                    tab += "<option value='" + obj.categoryname + "'>" + srno + ". " + obj.categoryname + " (" + obj.supercategory + ")</option>";
+                    srno++;
+                }
+                document.getElementById("category").innerHTML = tab;
+                document.getElementById("editcategory").innerHTML = tab;
+                document.getElementById("categoryname").innerHTML = tab;
+            } else {
+                document.getElementById("category").innerHTML = "<span class='spinner-border'></span>";
+                document.getElementById("editcategory").innerHTML = "<span class='spinner-border'></span>";
+                document.getElementById("categoryname").innerHTML = "<span class='spinner-border'></span>";
+            }
+        };
+        xml.open("POST", "./categoryaction", true);
+        xml.send(formdata);
+    }
+
+    function showsubcategory() {
+        let formdata = new FormData();
+        formdata.append("action", "view");
+        var xml = new XMLHttpRequest();
+        xml.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var ar = JSON.parse(this.response);
+                console.log(ar);
+                var tab = "";
+                var tab = "<option value=''>Select Sub Category</option>";
+                var srno = 1;
+                for (var x in ar) {
+                    obj = ar[x];
+                    tab += "<option value='" + obj.subcategoryname + "'>" + srno + ". " + obj.subcategoryname + " (" + obj.category +" || "+obj.supercategory+ ")</option>";
+                    srno++;
+                }
+                document.getElementById("subcategory").innerHTML = tab;
+                document.getElementById("editcategory").innerHTML = tab;
+                document.getElementById("subcategoryname").innerHTML = tab;
+            } else {
+                document.getElementById("subcategory").innerHTML = "<span class='spinner-border'></span>";
+                document.getElementById("editcategory").innerHTML = "<span class='spinner-border'></span>";
+                document.getElementById("subcategoryname").innerHTML = "<span class='spinner-border'></span>";
+            }
+        };
+        xml.open("POST", "./subcategoryaction", true);
+        xml.send(formdata);
+    }
+
+
+    $(document).ready(function () {
+        checksession();
+        showcategory();
+        showsubcategory();
+        viewproduct();
+    });
+</script>
+</body>
+</html>

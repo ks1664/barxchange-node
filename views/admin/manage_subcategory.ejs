@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <%- include('../headerfiles') %>
+</head>
+<body>
+<%- include('adminheader') %>
+<div class="container">
+    <div class="main-sec"></div>
+    <br>
+    <br>
+    <div class="row justify-content-center">
+        <h1>Manage Sub Category</h1>
+    </div>
+
+    <div class="row justify-content-center">
+        <a href="#" id="plus" class="open-button" onclick="openForm()"><i class="fa fa-5x fa-plus-square"></i></a>
+    </div>
+    <div class="row justify-content-center">
+        <a href="#" id="minus" class="open-button" style="display: none" onclick="closeForm()"><i
+                    class="fa fa-5x fa-minus-square"></i></a>
+    </div>
+    <div class="form-popup" id="myform">
+        <form action="" class="form-container" method="post" id="addform">
+            <div class="row mt-3">
+                <div class="row form-group col-md-8 justify-content-center offset-2">
+                    <label for="category" class="font-weight-bolder"><u>Category Name</u></label>
+                    <select name="category" id="category" class="input-field" data-rule-required="true"
+                            data-msg-required="Category must be selected">
+                        <option value="">Select category</option>
+                    </select>
+                </div>
+                <div class="row form-group col-md-8 justify-content-center offset-2">
+                    <label for="subcategoryname" class="font-weight-bolder"><u>Sub Category Name</u></label>
+                    <input type="text" name="subcategoryname" id="subcategoryname" data-rule-required="true"
+                           data-msg-required="Sub Category name is mandatory" placeholder="enter sub category name"
+                           class="input-field">
+                </div>
+                <div class="row form-group col-md-8 justify-content-center offset-2">
+                    <label for="subcategorydescription" class="font-weight-bolder"><u>Sub Category
+                            Description</u></label>
+                    <textarea name="subcategorydescription" id="subcategorydescription" data-rule-required="true"
+                              data-msg-required="Description must be entered" class="input-field" cols="20" rows="5"
+                              placeholder="enter sub category description "></textarea>
+                </div>
+                <div class="row form-group col-md-8 justify-content-center offset-2">
+                    <button type="button" name="addsubcategory" onclick="add_subcategory()"
+                            class="btn btn-success w-25">Submit
+                    </button>
+                    <input type="hidden" name="action" value="add" id="action">
+                </div>
+
+            </div>
+        </form>
+
+
+    </div>
+    <div class="row offset-3 mt-4 col-sm-5">
+        <h4>Select Category</h4>
+        <select name="categoryname" id="categoryname" class="input-field" data-rule-required="true"
+                data-msg-required="Category must be selected" onchange="filtersubcategory(this.value)">
+            <option value="">Select Category</option>
+        </select>
+    </div>
+    <div class="table-responsive" id="">
+        <table id="mysubcategory" class="table tablemera">
+            <thead class="text-center">
+            <tr>
+                <th>Sr No.</th>
+                <th>Sub Category Name</th>
+                <th>Sub Category Description</th>
+                <th>Category</th>
+                <th>Delete</th>
+                <th>Edit</th>
+            </tr>
+            </thead>
+            <tbody id="tableforsubcategory"></tbody>
+        </table>
+    </div>
+    <!-- The Modal -->
+    <div class="row" id="output"></div>
+    <div class="modal fade" id="myModalforsubcategory">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="" method="post" id="updateform">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header justify-content-center">
+                        <h4 class="modal-title">Edit Sub Category</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <div class="row form-group col-md-8 justify-content-center offset-2">
+                            <label for="editcategory" class="font-weight-bolder"><u>Category Name</u></label>
+                            <select name="editcategory" id="editcategory" class="input-field" data-rule-required="true"
+                                    data-msg-required="Category must be selected">
+                                <option value="">Select Category</option>
+                            </select>
+                        </div>
+                        <div class="row form-group col-md-8 justify-content-center offset-2">
+                            <label for="editsubcategoryname" class="font-weight-bolder"><u>Sub Category Name</u></label>
+                            <input type="hidden" id="editsubcategoryid" name="editsubcategoryid">
+                            <input type="text" name="editsubcategoryname" id="editsubcategoryname"
+                                   data-rule-required="true"
+                                   value=""
+                                   data-msg-required="Sub Category name is mandatory"
+                                   placeholder="enter sub category name"
+                                   class="input-field">
+                        </div>
+                        <div class="row form-group col-md-8 justify-content-center offset-2">
+                            <label for="editsubcategorydescription" class="font-weight-bolder"><u>Sub Category
+                                    Description</u></label>
+                            <textarea name="editsubcategorydescription" id="editsubcategorydescription"
+                                      data-rule-required="true"
+                                      data-msg-required="Description must be entered" class="input-field" cols="20"
+                                      rows="5"
+                                      placeholder="enter sub category description "></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="button" onclick="update_subcategory()" name="updatesubcategory"
+                                class="btn btn-danger">Save
+                            Changes
+                        </button>
+                        <input type="hidden" name="action" value="edit" id="action">
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+<%- include('../footer') %>
+<script>
+    var temptable;
+
+    function add_subcategory() {
+        if ($("#addform").valid()) {
+            var controls = document.getElementById("addform").elements;
+            var formdata = new FormData();
+            for (var i = 0; i < controls.length; i++) {
+                if (controls[i].type == "file") {
+                    formdata.append(controls[i].name, controls[i].files[0]);
+                } else {
+                    formdata.append(controls[i].name, controls[i].value);
+                }
+            }
+            var xml = new XMLHttpRequest();
+            xml.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    var output = this.responseText;
+                    document.getElementById("output").innerHTML = "<h4 class='text-center'>" + output + "</h4>";
+                    document.getElementById("addform").reset();
+                    viewsubcategory();
+                }
+            };
+            xml.open("POST", "./subcategoryaction", true);
+            xml.send(formdata);
+        }
+    }
+
+    function viewsubcategory() {
+        let formdata = new FormData();
+        formdata.append("action", "view");
+        var xml = new XMLHttpRequest();
+        xml.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var ar = JSON.parse(this.response);
+                var tab = "";
+                var srno = 1;
+                for (var x in ar) {
+                    obj = ar[x];
+                    tab += "<tr>";
+                    tab += "<td>" + srno + "</td>";
+                    tab += "<td>" + obj.subcategoryname + "</td>";
+                    tab += "<td>" + obj.description + "</td>";
+                    tab += "<td>" + obj.category + "</td>";
+                    tab += "<td><i onclick='deletesubcategory(\"" + obj.subcategoryid + "\")'" + "class='fa fa-trash text-danger' style='cursor: pointer;'></i></td>";
+                    tab += "<td><i onclick='editsubcategory(" + JSON.stringify(obj) + ")'" + "class='fa fa-edit text-warning' style='cursor: pointer;'></i></td>";
+                    tab += "</tr>";
+                    srno++;
+                }
+                document.getElementById("tableforsubcategory").innerHTML = tab;
+                try {
+                    if (temptable != undefined) {
+                        temptable.destroy();
+                    }
+                    temptable = $("#mysubcategory").dataTable({
+                        "bPaginate": false
+                    });
+                } catch (e) {
+
+                }
+                // $('#mysubcategory').dataTable({
+                //     // "bPaginate":false
+                // });
+            } else {
+                document.getElementById("tableforsubcategory").innerHTML = "<span class='spinner-border'></span>";
+            }
+        };
+        xml.open("POST", "./subcategoryaction", true);
+        xml.send(formdata);
+    }
+
+    function filtersubcategory(categoryname) {
+        let formdata = new FormData();
+        formdata.append("action", "filterview");
+        formdata.append("categoryname", categoryname);
+        var xml = new XMLHttpRequest();
+        xml.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var ar = JSON.parse(this.response);
+                var tab = "";
+                var srno = 1;
+                for (var x in ar) {
+                    obj = ar[x];
+                    tab += "<tr>";
+                    tab += "<td>" + srno + "</td>";
+                    tab += "<td>" + obj.subcategoryname + "</td>";
+                    tab += "<td>" + obj.description + "</td>";
+                    tab += "<td>" + obj.category + "</td>";
+                    tab += "<td><i onclick='deletesubcategory(\"" + obj.subcategoryid + "\")'" + " class='fa fa-trash text-danger' style='cursor: pointer;'></i></td>";
+                    tab += "<td><i onclick='editsubcategory(" + JSON.stringify(obj) + ")'" + " class='fa fa-edit text-warning' style='cursor: pointer;'></i></td>";
+                    tab += "</tr>";
+                    srno++;
+                }
+                document.getElementById("tableforsubcategory").innerHTML = tab;
+                try {
+                    if (temptable != undefined) {
+                        temptable.destroy();
+                    }
+                    temptable = $("#mysubcategory").dataTable({
+                        "bPaginate": false
+                    });
+                } catch (e) {
+
+                }
+            } else {
+                document.getElementById("tableforsubcategory").innerHTML = "<span class='spinner-border'></span>";
+            }
+        };
+        xml.open("POST", "./subcategoryaction", true);
+        xml.send(formdata);
+    }
+
+    function editsubcategory(obj) {
+        $("#myModalforsubcategory").modal("show");
+        document.getElementById("editsubcategoryid").value = obj.subcategoryid;
+        document.getElementById("editsubcategoryname").value = obj.subcategoryname;
+        document.getElementById("editsubcategorydescription").value = obj.description;
+        document.getElementById("editcategory").value = obj.category;
+    }
+
+    function update_subcategory() {
+        if ($("#updateform").valid()) {
+            var controls = document.getElementById("updateform").elements;
+            var formdata = new FormData();
+            for (var i = 0; i < controls.length; i++) {
+                if (controls[i].type == "file") {
+                    formdata.append(controls[i].name, controls[i].files[0]);
+                } else {
+                    formdata.append(controls[i].name, controls[i].value);
+                }
+            }
+            var xml = new XMLHttpRequest();
+            xml.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    var output = this.responseText;
+                    document.getElementById("output").innerHTML = "<h4 class='text-center'>" + output + "</h4>";
+                    viewsubcategory();
+                    $("#myModalforsubcategory").modal('hide');
+                }
+            };
+            xml.open("POST", "./subcategoryaction", true);
+            xml.send(formdata);
+        }
+    }
+
+    function deletesubcategory(subcatid) {
+        var cc = confirm("Are you sure to delete ?");
+        if (cc) {
+            let formdata = new FormData();
+            formdata.append("action", "delete");
+            formdata.append('subcatid', subcatid);
+            var httpreg = new XMLHttpRequest();
+            httpreg.onreadystatechange = function () {
+                if (this.status == 200 && this.readyState == 4) {
+                    var output = this.responseText;
+                    document.getElementById("output").innerHTML = "<h4 class='text-center'>" + output + "</h4>";
+                    viewsubcategory();
+                }
+            };
+            httpreg.open("POST", "./subcategoryaction", true);
+            httpreg.send(formdata);
+        }
+    }
+
+    function showcategory() {
+        let formdata = new FormData();
+        formdata.append("action", "view");
+        var xml = new XMLHttpRequest();
+        xml.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var ar = JSON.parse(this.response);
+                console.log(ar);
+                var tab = "";
+                var tab = "<option value=''>Select Category</option>";
+                var srno = 1;
+                for (var x in ar) {
+                    obj = ar[x];
+                    tab += "<option value='" + obj.categoryname + "'>" + srno + ". " + obj.categoryname + " (" + obj.supercategory + ")</option>";
+                    srno++;
+                }
+                document.getElementById("category").innerHTML = tab;
+                document.getElementById("editcategory").innerHTML = tab;
+                document.getElementById("categoryname").innerHTML = tab;
+            } else {
+                document.getElementById("category").innerHTML = "<span class='spinner-border'></span>";
+                document.getElementById("editcategory").innerHTML = "<span class='spinner-border'></span>";
+                document.getElementById("categoryname").innerHTML = "<span class='spinner-border'></span>";
+            }
+        };
+        xml.open("POST", "./categoryaction", true);
+        xml.send(formdata);
+    }
+
+    $(document).ready(function () {
+        checksession();
+        showcategory();
+        viewsubcategory();
+    });
+</script>
+<script src="../datatable/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" href="../datatable/jquery.dataTables.css">
+</body>
+</html>
+

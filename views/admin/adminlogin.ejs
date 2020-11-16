@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <%- include('../headerfiles') %>
+
+    <title>Admin Login</title>
+</head>
+<body>
+<%- include('adminpublicheader') %>
+
+<div class="container" id="bubble-background">
+    <div class="jumbotron">
+        <div class="row offset-3">
+            <h1 class="text-primary">Login Here</h1>
+            <hr>
+        </div>
+        <form method="post" id="form1">
+            <div class="row col-sm-6 offset-3">
+                <div class="input-container">
+                    <i class="fa fa-user icon"></i>
+                    <input class="input-field" type="text" placeholder="enter username" name="username" id="username"
+                           data-rule-required="true">
+                </div>
+            </div>
+            <div class="row justify-content-center col-sm-6 offset-3">
+                <div class="input-container">
+                    <i class="fa fa-lock icon"></i>
+                    <input type="password" class="input-field" placeholder="enter password" name="password"
+                           data-rule-required="true"
+                           id="password">
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <input type="button" onclick="adminlogin()" value="submit" class='btn btn-success'>
+                <input type="hidden" value="login" name="action" id="action" class='btn btn-success'>
+            </div>
+        </form>
+        <div class="row justify-content-center mt-3" id="output"></div>
+
+    </div>
+
+</div>
+<%- include('../footer') %>
+
+<script>
+    function adminlogin() {
+        if ($("#form1").valid()) {
+            var controls = document.getElementById("form1").elements;
+            var formdata = new FormData();
+            for (var i = 0; i < controls.length; i++) {
+                if (controls[i].type == "file") {
+                    formdata.append(controls[i].name, controls[i].files[0]);
+                } else {
+                    formdata.append(controls[i].name, controls[i].value);
+                }
+            }
+            var xml = new XMLHttpRequest();
+            xml.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    var output = this.responseText;
+                    if (output == "0") {
+                        document.getElementById("output").innerHTML = "<h3 class='text-danger'>Logged in Successfully</h3>";
+                        setInterval("moveToNextPage()", 1000);
+                    } else {
+                        document.getElementById("output").innerHTML = "<h3 class='text-danger'>Log in Failed</h3>";
+                    }
+                    document.getElementById("form1").reset();
+                }
+            };
+            xml.open("POST", "./adminaction", true);
+            xml.send(formdata);
+        }
+    }
+
+    function moveToNextPage() {
+        window.location.href = "/admin/adminhome";
+    }
+
+</script>
+</body>
+</html>
