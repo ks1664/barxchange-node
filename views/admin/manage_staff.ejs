@@ -46,10 +46,16 @@
                     <div class="row">
                         <div class="input-container">
                             <i class="icon fa fa-phone"></i>
-                            <input type="number" name="mobile" id="mobile"
+                            <input type="tel" name="mobile" id="mobile"
                                    placeholder="enter a valid mobile number"
                                    data-rule-required="true" data-msg-required="Please enter a valid mobile number"
                                    class="input-field" minlength="10" maxlength="12">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-container">
+                            <i class="icon fa fa-lightbulb"></i>
+                            <input type="text" readonly value="Inactive" class="input-field">
                         </div>
                     </div>
                 </div>
@@ -74,6 +80,17 @@
                                    class="input-field">
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="input-container">
+                            <i class="icon fa fa-user"></i>
+                            <select name="type" id="type" class="input-field" data-rule-required="true"
+                                    data-msg-required="Type must be selected">
+                                <option value="Captain">Captain</option>
+                                <option value="Cashier">Cashier</option>
+                                <option value="Kitchen">Kitchen</option>
+                            </select>
+                        </div>
+                    </div>
 
                 </div>
 
@@ -96,9 +113,10 @@
             <thead>
             <tr>
                 <th>Sr No.</th>
-                <th>Staff Name</th>
+                <th>Staff&nbsp;Name</th>
                 <th>Email</th>
                 <th>Mobile</th>
+                <th>Type</th>
                 <th>Status</th>
                 <th>Edit</th>
             </tr>
@@ -109,7 +127,7 @@
     <!-- The Modal -->
     <div class="row" id="output"></div>
     <div class="modal fade" id="myModalforstaff">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg modal-sm">
             <div class="modal-content">
                 <form action="" method="post" id="updateform">
 
@@ -121,50 +139,62 @@
 
                     <!-- Modal body -->
                     <div class="modal-body">
-                        <div class="row mt-3">
+                        <div class="col-sm-12">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="text-center form-group">
+                                        <label for="editstaffname" class="font-weight-bolder"><u>Staff Name </u></label>
+                                        <input type="text" name="editstaffname" id="editstaffname"
+                                               placeholder="enter staff name" readonly
+                                               data-rule-required="true"
+                                               data-msg-required="Please enter an name"
+                                               class="input-field" value="">
+                                    </div>
 
-                            <div class="col-sm-8 offset-2 mr-3">
-                                <div class="row justify-content-center">
-                                    <label for="editstaffname" class="font-weight-bolder"><u>Staff Name </u></label>
-                                    <input type="text" name="editstaffname" id="editstaffname"
-                                           placeholder="enter staff name" readonly
-                                           data-rule-required="true"
-                                           data-msg-required="Please enter an name"
-                                           class="input-field" value="">
+                                    <div class="form-group text-center">
+                                        <label for="editemail" class="font-weight-bolder"><u>Email </u></label>
+                                        <input type="email" name="editemail" id="editemail"
+                                               placeholder="enter a valid email"
+                                               data-rule-required="true"
+                                               data-msg-required="Please enter a valid email"
+                                               class="input-field"
+                                               value="">
+                                    </div>
+                                    <div class="form-group text-center">
+                                        <label for="editmobile" class="font-weight-bolder"><u>Mobile </u></label>
+                                        <input type="tel" name="editmobile" id="editmobile"
+                                               placeholder="enter a valid mobile number"
+                                               data-rule-required="true"
+                                               data-msg-required="Please enter a valid mobile number"
+                                               class="input-field" minlength="10" maxlength="10"
+                                               value="">
+                                    </div>
                                 </div>
-
-                                <div class="row form-group justify-content-center">
-                                    <label for="editemail" class="font-weight-bolder"><u>Email </u></label>
-                                    <input type="email" name="editemail" id="editemail"
-                                           placeholder="enter a valid email"
-                                           data-rule-required="true"
-                                           data-msg-required="Please enter a valid email"
-                                           class="input-field"
-                                           value="">
-                                </div>
-                                <div class="row form-group justify-content-center">
-                                    <label for="editmobile" class="font-weight-bolder"><u>Mobile </u></label>
-                                    <input type="tel" name="editmobile" id="editmobile"
-                                           placeholder="enter a valid mobile number"
-                                           data-rule-required="true"
-                                           data-msg-required="Please enter a valid mobile number"
-                                           class="input-field" minlength="10" maxlength="10"
-                                           value="">
-                                </div>
-                                <div class="row form-group justify-content-center">
-                                    <label for="editpassword" class="font-weight-bolder"><u>Password </u></label>
-                                    <input type="password" name="editpassword" id="editpassword"
-                                           placeholder="enter secure password"
-                                           data-rule-required="true" data-msg-required="Please enter password"
-                                           class="input-field">
-                                </div>
-                                <div class="row form-group justify-content-center">
-                                    <label for="status" class="font-weight-bolder"><u>Status</u></label>
-                                    <select name="status" id="status" class="input-field" data-rule-required="true"
-                                            data-msg-required="Super Category must be selected">
-                                        <option value="Blocked">Block</option>
-                                        <option value="Activated">Active</option>
-                                    </select>
+                                <div class="col-sm-6">
+                                    <div class="form-group text-center">
+                                        <label for="editpassword" class="font-weight-bolder"><u>Password </u></label>
+                                        <input type="password" name="editpassword" id="editpassword"
+                                               placeholder="enter secure password"
+                                               data-rule-required="true" data-msg-required="Please enter password"
+                                               class="input-field">
+                                    </div>
+                                    <div class="form-group text-center">
+                                        <label for="edittype" class="font-weight-bolder"><u>Type</u></label>
+                                        <select name="edittype" id="edittype" class="input-field"
+                                                data-rule-required="true"
+                                                data-msg-required="Type must be selected">
+                                            <option value="Captain">Captain</option>
+                                            <option value="Cashier">Cashier</option>
+                                            <option value="Kitchen">Kitchen</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group text-center">
+                                        <label for="status" class="font-weight-bolder"><u>Status</u></label>
+                                        <select name="status" id="status" class="input-field" data-rule-required="true">
+                                            <option value="Blocked">Block</option>
+                                            <option value="Activated">Active</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -233,6 +263,7 @@
                     tab += "<td>" + obj.staffname + "</td>";
                     tab += "<td>" + obj.email + "</td>";
                     tab += "<td>" + obj.mobile + "</td>";
+                    tab += "<td>" + obj.type + "</td>";
                     tab += "<td>" + obj.status + "</td>";
                     tab += "<td><i onclick='editstaff(" + JSON.stringify(obj) + ")'" + "class='fa fa-edit text-warning' style='cursor: pointer;'></i></td>";
                     tab += "</tr>";
@@ -263,6 +294,7 @@
         document.getElementById("editmobile").value = obj.mobile;
         document.getElementById("editemail").value = obj.email;
         document.getElementById("editpassword").value = obj.password;
+        document.getElementById("edittype").value = obj.type;
         document.getElementById("status").value = obj.status;
     }
 

@@ -151,6 +151,7 @@ router.post("/staffaction", (req, res) => {
             let staffname = req.body.staffname;
             let mobile = req.body.mobile;
             let password = req.body.password;
+            let type = req.body.type;
             let message = "Dear '" + staffname + "'you are registered successfully. \n Your Login Credentials are Username: '" + staffname + "'' & Password: '" + password + "' .\n Thanks with Regards.";
             Query = "select * from staff where staffname='" + staffname + "'";
             conn.query(Query, function (err, rows) {
@@ -158,9 +159,7 @@ router.post("/staffaction", (req, res) => {
                 if (rows.length > 0) {
                     res.send(staffname + " Username already exist");
                 } else {
-
-                    Query = "INSERT INTO `staff`(`staffname`, `password`, `email`, `mobile`, `status`) VALUES ('" + staffname + "','" + password + "','" + email + "','" + mobile + "','Blocked')";
-
+                    Query = "INSERT INTO `staff`(`staffname`, `password`, `email`, `mobile`, `status`,`type`) VALUES ('" + staffname + "','" + password + "','" + email + "','" + mobile + "','Blocked','" + type + "')";
                     conn.query(Query, function (err) {
                         if (err) throw  err;
                         let mailTransporter = nodemailer.createTransport({
@@ -211,8 +210,8 @@ router.post("/staffaction", (req, res) => {
             let mobile = req.body.editmobile;
             let password = req.body.editpassword;
             let status = req.body.status;
-            //`username`, `email`, `password`, `type`
-            Query = "UPDATE `staff` SET `password`='" + password + "',`email`='" + email + "',`mobile`='" + mobile + "',`status`='" + status + "' WHERE `staffname`='" + staffname + "'";
+            let type = req.body.edittype;
+            Query = "UPDATE `staff` SET `password`='" + password + "',`email`='" + email + "',`mobile`='" + mobile + "',`status`='" + status + "',`type`='" + type + "' WHERE `staffname`='" + staffname + "'";
             conn.query(Query, function (err) {
                 if (err) throw  err;
                 res.send('Staff Updated Successfully');
@@ -398,7 +397,12 @@ router.post("/productaction", (req, res) => {
             })
 
         } else if (action == "view") {
-            Query = "select * from product inner join subcategory on subcategory.subcategoryid=product.subcatid inner join category on subcategory.category=category.categoryname";
+            let subcategoryid = req.body.subcategoryid;
+            if (subcategoryid != "") {
+                Query = "select * from product inner join subcategory on subcategory.subcategoryid=product.subcatid inner join category on subcategory.category=category.categoryname where product.subcatid='" + subcategoryid + "'";
+            } else {
+                Query = "select * from product inner join subcategory on subcategory.subcategoryid=product.subcatid inner join category on subcategory.category=category.categoryname";
+            }
             conn.query(Query, function (err, rows) {
                 if (err) throw  err;
                 res.send(rows);
@@ -432,7 +436,7 @@ router.post("/productaction", (req, res) => {
             let price = req.body.editprice;
             let discount = req.body.editdiscount;
             let description = req.body.editdescription;
-            if (req.body.editphoto != "") {
+            if (req.files != null) {
                 let photo = req.files.editphoto;
                 save_file_on_server(photo, 'photo');
                 let photopath = 'photo/' + photo.name;

@@ -71,7 +71,8 @@
                         </div>
                     </div>
                     <div class="col-sm-3 offset-1">
-                        <img style="height: 200px;width: 200px;border-top-style: dotted;border-bottom-style: dotted;border-left-style:dotted;border-right-style: dotted" src="../photo/download.jpg" id="showimg" alt="">
+                        <img style="height: 200px;width: 200px;border-top-style: dotted;border-bottom-style: dotted;border-left-style:dotted;border-right-style: dotted"
+                             src="../photo/download.jpg" id="showimg" alt="">
                     </div>
                     <div class="col-sm-4">
                         <div class="form-group">
@@ -130,23 +131,22 @@
         <h4 id="output" class="text-primary"></h4>
     </div>
     <div class="row mb-2">
-        <div class="offset-2 mt-4 col-sm-3">
+        <div class="offset-1 mt-4 col-sm-4">
             <h4>Select Category</h4>
             <select name="categoryname" id="categoryname" class="input-field" data-rule-required="true"
                     data-msg-required="Category must be selected" onchange="onchangecategory(this.value)">
                 <option value="">Select Category</option>
             </select>
         </div>
-        <div class="offset-2 mt-4 col-sm-3">
+        <div class="offset-2 mt-4 col-sm-4">
             <h4>Select Sub Category</h4>
             <select name="subcategoryname" id="subcategoryname" class="input-field" data-rule-required="true"
-                    data-msg-required="Category must be selected" onchange="filterproduct(this.value)">
-                <option value="">Select Type</option>
+                    data-msg-required="Category must be selected" onchange="viewproduct(this.value)">
             </select>
         </div>
     </div>
 
-    <div class="table-responsive" id="">
+    <div class="table-responsive mt-2" id="">
         <table id="myproduct" class="table tablemera table-bordered">
             <thead class="text-center">
             <tr>
@@ -440,7 +440,6 @@
     }
 
 
-
     function add_product() {
         if ($("#addform").valid()) {
             var controls = document.getElementById("addform").elements;
@@ -496,13 +495,15 @@
         }
     }
 
-    function viewproduct() {
+    function viewproduct(subcategoryid) {
+        // console.log(subcategoryid);
         let formdata = new FormData();
         formdata.append("action", "view");
+        formdata.append("subcategoryid", subcategoryid);
         var xml = new XMLHttpRequest();
         xml.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
-                // alert("122");
+               // console.log(this.response);
                 var ar = JSON.parse(this.response);
                 var tab = "";
                 var srno = 1;
@@ -566,8 +567,6 @@
                     tab += "</tr>";
                     srno++;
                 }
-                // tab +="</tbody>";
-                // tab +="</table>";
                 document.getElementById("tableforphoto").innerHTML = tab;
                 $("#myModalforphototable").modal("show");
                 try {
@@ -595,7 +594,7 @@
         document.getElementById("editprice").value = obj.price;
         document.getElementById("editstock").value = obj.stock;
         document.getElementById("editdiscount").value = obj.discount;
-        document.getElementById("editphotoimg").src = "../"+obj.photo;
+        document.getElementById("editphotoimg").src = "../" + obj.photo;
         document.getElementById("editdescription").value = obj.description;
         document.getElementById("editsubcategoryid").value = obj.subcategoryid;
         document.getElementById("editsubcategoryname").value = obj.subcategoryname;
@@ -678,9 +677,9 @@
         xml.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
                 var ar = JSON.parse(this.response);
-                console.log(ar);
+                // console.log(ar);
                 var tab = "";
-                var tab = "<option value=''>Select Category</option>";
+                tab += "<option value=''>Select Category</option>";
                 var srno = 1;
                 for (var x in ar) {
                     obj = ar[x];
@@ -707,13 +706,13 @@
         xml.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
                 var ar = JSON.parse(this.response);
-                console.log(ar);
+                // console.log(ar);
                 var tab = "";
-                var tab = "<option value=''>Select Sub Category</option>";
+                tab += "<option value=''>Select Sub Category</option>";
                 var srno = 1;
                 for (var x in ar) {
                     obj = ar[x];
-                    tab += "<option value='" + obj.subcategoryname + "'>" + srno + ". " + obj.subcategoryname + " (" + obj.category +" || "+obj.supercategory+ ")</option>";
+                    tab += "<option value='" + obj.subcategoryid + "'>" + srno + ". " + obj.subcategoryname + " (" + obj.category + " || " + obj.supercategory + ")</option>";
                     srno++;
                 }
                 document.getElementById("subcategory").innerHTML = tab;
@@ -734,7 +733,7 @@
         checksession();
         showcategory();
         showsubcategory();
-        viewproduct();
+        viewproduct('');
     });
 </script>
 </body>
