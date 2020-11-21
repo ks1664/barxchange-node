@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <%- include('../headerfiles') %>
+</head>
+<body>
+<%- include('staffheader') %>
+
+<div class="super_container">
+
+    <div class="home">
+        <div class="parallax_background parallax-window" data-parallax="scroll" data-image-src="../images/contact.jpg"
+             data-speed="0.8"></div>
+        <div class="home_container">
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <div class="home_content text-center">
+                            <div class="home_subtitle page_subtitle">The Venue</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="contact">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 text-center">
+                    <img class="img-fluid" style="height: 300px;width: 300px" src="../images/6f4639707ece736afe32a7757c01ff9e.gif">
+                </div>
+                <div class="col-xl-5 col-lg-6">
+                    <div class="contact_list_container d-flex flex-column align-items-lg-center justify-content-start">
+                        <div class="col-12">
+                            <h1 class="text-light-black fw-700"> <strong class=" text-success">Welcome</strong> to Staff
+                                panel</h1></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<%- include('../footer2') %>
+<script>
+    $(document).ready(function (){
+        checksession();
+    })
+</script>
+</body>
+</html>

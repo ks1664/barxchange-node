@@ -93,3 +93,29 @@
 
 <script src="../ajax.cloudflare.com/cdn-cgi/scripts/7089c43e/cloudflare-static/rocket-loader.min.js"
         data-cf-settings="b5826ae164015e3cbb7c454c-|49" defer=""></script>
+
+<script>
+    function checksession() {
+        // alert();
+        let formdata = new FormData();
+        formdata.append("action", "checksession");
+        var xml = new XMLHttpRequest();
+        xml.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var session = this.responseText;
+                // alert(session);
+                // console.log(ar);
+                if (session == "session_empty") {
+                    window.location.href = "/users/stafflogin";
+                } else {
+                    document.getElementById("staffsession").innerHTML = session;
+                }
+            } else {
+                document.getElementById("staffsession").innerHTML = "<span class='spinner-border'></span>";
+            }
+        };
+        xml.open("POST", "./staffaction", true);
+        xml.send(formdata);
+    }
+
+</script>
