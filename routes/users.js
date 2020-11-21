@@ -103,7 +103,7 @@ router.post("/menuaction", (req, res) => {
             if (category != "") {
                 Query = "select * from subcategory where category='" + category + "'";
             } else {
-                Query = "select * from subcategory";
+                Query = "select * from subcategory inner join category on category.categoryname=subcategory.category";
             }
             conn.query(Query, function (err, rows) {
                 if (err) throw  err;
