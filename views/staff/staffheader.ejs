@@ -1,0 +1,77 @@
+<header class="header">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="header_content d-flex flex-row align-items-center justify-content-start">
+                    <div class="logo">
+                        <a href="#">
+                            <div>The Venue</div>
+                            <div>restaurant</div>
+                        </a>
+                    </div>
+                    <nav class="main_nav">
+                        <ul class="d-flex flex-row align-items-center justify-content-start">
+                            <li><a href="/users/menu">menu</a></li>
+                            <li class="menu-item dropdown dropright menu-item-has-children"><a
+                                        href="myorder.php">Orders</a>
+                            </li>
+                            <li class="cart"><a href="viewcart.php" class="text-dark-red"><i class="fa fa-cart-arrow-down"></i></a>
+                                <span class="cart" id="cartcount">  <?php
+                                    if (isset($_SESSION['products'])) {
+                                        $ar = $_SESSION['products'];
+                                        echo count($ar);
+                                    } else {
+                                        echo 0;
+                                    }
+                                    ?></span>
+                            </li>
+                            <li class="menu-item dropdown dropright menu-item-has-children"><a
+                                        href="">Hi,&nbsp;</a>
+                                <ul class="sub-menu">
+                                    <li class="menu-item"><a href="/users/staff_changepassword">Change Password</a></li>
+                                    <li class="menu-item"><a href="/users/stafflogout">Log Out</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </nav>
+                    <div class="reservations_phone ml-auto">Reservations: +34 586 778 8892</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="hamburger_bar trans_400 d-flex flex-row align-items-center justify-content-start">
+    <div class="hamburger">
+        <div class="menu_toggle d-flex flex-row align-items-center justify-content-start">
+            <span></span>
+            <div class="hamburger_container">
+                <div class="menu_hamburger">
+                    <div class="line_1 hamburger_lines" style="transform: matrix(1, 0, 0, 1, 0, 0);"></div>
+                    <div class="line_2 hamburger_lines" style="visibility: inherit; opacity: 1;"></div>
+                    <div class="line_3 hamburger_lines" style="transform: matrix(1, 0, 0, 1, 0, 0);"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="menu trans_800">
+    <div class="menu_content d-flex flex-column align-items-center justify-content-center text-center">
+        <ul>
+            <li><a href="/users/menu">menu</a></li>
+            <li><a href="myorder.php">Orders</a></li>
+            <li class="cart"><a href="viewcart.php" class="text-dark-red"><i class="fa fa-cart-arrow-down"></i></a>
+                <span class="cart" id="cartcount"></span>
+            </li>
+            <li class="menu-item dropdown dropright menu-item-has-children"><a
+                        href="">Hi,<?php echo $email; ?></a>
+                <ul class="sub-menu">
+                    <li class="menu-item"><a href="/users/staff_changepassword">Change Password</a></li>
+                    <li class="menu-item"><a href="/users/stafflogout">Log Out</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div class="menu_reservations_phone ml-auto">Reservations: +34 586 778 8892</div>
+</div>
