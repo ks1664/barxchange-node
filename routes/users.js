@@ -101,9 +101,21 @@ router.post("/menuaction", (req, res) => {
         } else if (action == "subcategoryview") {
             let category = req.body.category;
             if (category != "") {
-                Query = "select * from subcategory where category='" + category + "'";
+                Query = "select * from subcategory inner join category on category.categoryname=subcategory.category where subcategory.category='" + category + "'";
             } else {
                 Query = "select * from subcategory inner join category on category.categoryname=subcategory.category";
+            }
+            conn.query(Query, function (err, rows) {
+                if (err) throw  err;
+                res.send(rows);
+            })
+
+        } else if (action == "menuview") {
+            let subcatid = req.body.subcatid;
+            if (subcatid != "") {
+                Query = "select * from product inner join subcategory on subcategory.subcategoryid=product.subcatid inner join category on category.categoryname=subcategory.category where product.subcatid='" + subcatid + "'";
+            } else {
+                Query = "select * from product inner join subcategory on subcategory.subcategoryid=product.subcatid inner join category on category.categoryname=subcategory.category";
             }
             conn.query(Query, function (err, rows) {
                 if (err) throw  err;
