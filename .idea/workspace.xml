@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="817141e3-a89d-47a0-8478-7b1bb607accc" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/users.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/users.js" afterDir="false" />
-    </list>
+    <list default="true" id="817141e3-a89d-47a0-8478-7b1bb607accc" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -84,7 +79,7 @@
       <workItem from="1605845612518" duration="4292000" />
       <workItem from="1605860750535" duration="4022000" />
       <workItem from="1605935433990" duration="4850000" />
-      <workItem from="1606104748074" duration="2403000" />
+      <workItem from="1606104748074" duration="3074000" />
     </task>
     <task id="LOCAL-00001" summary="staff_login">
       <created>1605781519821</created>
@@ -107,7 +102,14 @@
       <option name="project" value="LOCAL" />
       <updated>1605960096609</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="menu">
+      <created>1606111029273</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1606111029273</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -119,10 +121,10 @@
     <option name="LAST_COMMIT_MESSAGE" value="menu" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="308" y="0" key="CommitChangelistDialog2" timestamp="1605960095141">
+    <state x="308" y="0" key="CommitChangelistDialog2" timestamp="1606111027795">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="308" y="0" key="CommitChangelistDialog2/0.0.1366.728@0.0.1366.728" timestamp="1605960095141" />
+    <state x="308" y="0" key="CommitChangelistDialog2/0.0.1366.728@0.0.1366.728" timestamp="1606111027795" />
     <state width="1323" height="175" key="GridCell.Tab.0.bottom" timestamp="1606105866459">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
