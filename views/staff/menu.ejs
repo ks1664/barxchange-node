@@ -74,7 +74,7 @@
                             <h4>Select Sub Category</h4>
                             <select name="subcategory" id="foodsubcategory" class="input-field"
                                     data-rule-required="true"
-                                    data-msg-required="Category must be selected" onchange="filtermenu(this.value)">
+                                    data-msg-required="Category must be selected" onchange="showmenu(this.value)">
                                 <option value="">Select Subcategory</option>
                             </select>
                         </div>
@@ -98,7 +98,7 @@
                             <h4>Select Sub Category</h4>
                             <select name="subcategory" id="liquorsubcategory" class="input-field"
                                     data-rule-required="true"
-                                    data-msg-required="Category must be selected" onchange="filtermenul(this.value)">
+                                    data-msg-required="Category must be selected" onchange="showmenu(this.value)">
                                 <option value="">Select Subcategory</option>
                             </select>
                         </div>
@@ -197,26 +197,50 @@
                 var foodtab = "";
                 var liquortab = "";
                 var srno = 1;
+                var srno1 = 1;
                 for (var x in ar) {
                     obj = ar[x];
-                    tab += `<div class='col-lg-4 themenu_column form-group'>`;
-                    tab += `<div class='themenu_col trans_400'>`;
-                    tab += `<div class='' style='font-size: 20px'>${obj.category}</div>`;
-                    tab += `<div class='themenu_title' style='font-size: 25px'>${obj.subcategoryname}</div>`;
-                    tab += "<div class='dish_list'><div class='dish'><div class='dish_title_container d-flex flex-xl-row flex-column align-items-start justify-content-start'><div class='dish_title'>" + obj.productname + "&nbsp;&nbsp;<img style='height: 55px;width: 55px' src='../" + obj.photo + "' alt=''></div><div class='dish_price'>&#8377;";
-                    if ((obj.discount != 0) && (obj.discount > 0)) {
-                        var discountedPrice = obj.price - (obj.price * obj.discount / 100);
-                        tab += Math.floor(discountedPrice);
+                    if (obj.supercategory == "liquor") {
+                        liquortab += `<div class='col-lg-4 themenu_column form-group'>`;
+                        liquortab += `<div class='themenu_col trans_400'>`;
+                        liquortab += `<div class='' style='font-size: 20px'>${obj.category}</div>`;
+                        liquortab += `<div class='themenu_title' style='font-size: 25px'>${obj.subcategoryname}</div>`;
+                        liquortab += "<div class='dish_list'><div class='dish'><div class='dish_title_container d-flex flex-xl-row flex-column align-items-start justify-content-start'><div class='dish_title'>" + obj.productname + "&nbsp;&nbsp;<img style='height: 55px;width: 55px' src='../" + obj.photo + "' alt=''></div><div class='dish_price'>&#8377;";
+                        if ((obj.discount != 0) && (obj.discount > 0)) {
+                            var discountedPrice = obj.price - (obj.price * obj.discount / 100);
+                            liquortab += Math.floor(discountedPrice);
+                        } else {
+                            liquortab += parseFloat(obj.price);
+                        }
+                        liquortab += "</div></div> <div class='dish_contents'>" + obj.description + "</div><div class='dish_order'><a onclick='addToCart(obj.productid,1)'>Order Now</a></div></div></div>";
+                        liquortab += "</div>";
+                        liquortab += "</div>";
+                        srno++;
                     } else {
-                        tab += parseFloat(obj.price);
+                        foodtab += `<div class='col-lg-4 themenu_column form-group'>`;
+                        foodtab += `<div class='themenu_col trans_400'>`;
+                        foodtab += `<div class='' style='font-size: 20px'>${obj.category}</div>`;
+                        foodtab += `<div class='themenu_title' style='font-size: 25px'>${obj.subcategoryname}</div>`;
+                        foodtab += "<div class='dish_list'><div class='dish'><div class='dish_title_container d-flex flex-xl-row flex-column align-items-start justify-content-start'><div class='dish_title'>" + obj.productname + "&nbsp;&nbsp;<img style='height: 55px;width: 55px' src='../" + obj.photo + "' alt=''></div><div class='dish_price'>&#8377;";
+                        if ((obj.discount != 0) && (obj.discount > 0)) {
+                            var discountedPrice = obj.price - (obj.price * obj.discount / 100);
+                            foodtab += Math.floor(discountedPrice);
+                        } else {
+                            foodtab += parseFloat(obj.price);
+                        }
+                        foodtab += "</div></div> <div class='dish_contents'>" + obj.description + "</div>";
+                        if (obj.stock > 0) {
+                            foodtab += "<div class='dish_order'><a style='cursor: pointer' onclick='addToCart(obj.productid,1)'>Order Now</a></div>";
+                        } else {
+                            foodtab += "<div class='dish_order'><p style='color: red;font-weight: bold;cursor: not-allowed'>Out of Stock</p></div>";
+                        }
+                        foodtab += "</div></div></div>";
+                        foodtab += "</div>";
+                        srno1++;
                     }
-                    tab += "</div></div> <div class='dish_contents'>" + obj.description + "</div><div class='dish_order'><a onclick='addToCart(obj.productid,1)'>Order Now</a></div></div></div>";
-                    tab += "</div>";
-                    tab += "</div>";
-                    srno++;
                 }
-                document.getElementById("foodmenuproduct").innerHTML = tab;
-                document.getElementById("liquormenuproduct").innerHTML = tab;
+                document.getElementById("foodmenuproduct").innerHTML = foodtab;
+                document.getElementById("liquormenuproduct").innerHTML = liquortab;
             } else {
                 document.getElementById("foodmenuproduct").innerHTML = "<span class='spinner-border'></span>";
                 document.getElementById("liquormenuproduct").innerHTML = "<span class='spinner-border'></span>";
@@ -224,6 +248,30 @@
         };
         xml.open("POST", "./menuaction", true);
         xml.send(formdata);
+    }
+
+    function addToCart(productid, qty = null) {
+        if (qty == null) {
+            if ($("#myFormQty").valid()) {
+                var qtyval = document.getElementById("qty").value;
+            } else {
+                alert("Please choose the Quantity less than stock");
+            }
+        } else {
+            qtyval = 'index';
+        }
+        if (qtyval != undefined) {
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function () {
+                if (this.status == 200 && this.readyState == 4) {
+                    alert("1 Item added Successfully in the Cart");
+                    document.getElementById("cartcount").innerHTML = this.responseText;
+
+                }
+            };
+            xmlhttp.open("GET", "addtoCart.php?q=" + productid + "&qty=" + qtyval, true);
+            xmlhttp.send();
+        }
     }
 
 
@@ -235,7 +283,6 @@
         showsubcategory('');
         showmenu('');
     });
-
 
 
 </script>

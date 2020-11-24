@@ -13,19 +13,12 @@
                         <ul class="d-flex flex-row align-items-center justify-content-start">
                             <li><a href="/users/menu">menu</a></li>
                             <li class="menu-item dropdown dropright menu-item-has-children"><a
-                                        href="myorder.php">Orders</a>
+                                        href="/users/myorder">Orders</a>
                             </li>
-                            <li class="cart"><a href="viewcart.php" class="text-dark-red"><i class="fa fa-cart-arrow-down"></i></a>
-                                <span class="cart" id="cartcount">  <?php
-                                    if (isset($_SESSION['products'])) {
-                                        $ar = $_SESSION['products'];
-                                        echo count($ar);
-                                    } else {
-                                        echo 0;
-                                    }
-                                    ?></span>
+                            <li class="cart"><a href="/users/viewcart" class="text-dark-red"><i class="fa fa-cart-arrow-down"></i></a>
+                                <span class="cart" id="cartcount"></span>
                             </li>
-                            <li class="menu-item dropdown dropright menu-item-has-children"><a
+                            <li class="menu-item dropdown dropright menu-item-has-children"><a id="staffsession"
                                         href="">Hi,&nbsp;</a>
                                 <ul class="sub-menu">
                                     <li class="menu-item"><a href="/users/staff_changepassword">Change Password</a></li>
@@ -60,12 +53,12 @@
     <div class="menu_content d-flex flex-column align-items-center justify-content-center text-center">
         <ul>
             <li><a href="/users/menu">menu</a></li>
-            <li><a href="myorder.php">Orders</a></li>
-            <li class="cart"><a href="viewcart.php" class="text-dark-red"><i class="fa fa-cart-arrow-down"></i></a>
+            <li><a href="/users/myorder">Orders</a></li>
+            <li class="cart"><a href="/users/viewcart" class="text-dark-red"><i class="fa fa-cart-arrow-down"></i></a>
                 <span class="cart" id="cartcount"></span>
             </li>
             <li class="menu-item dropdown dropright menu-item-has-children"><a
-                        href="">Hi,<?php echo $email; ?></a>
+                        href="" id="staffsession2">Hi,</a>
                 <ul class="sub-menu">
                     <li class="menu-item"><a href="/users/staff_changepassword">Change Password</a></li>
                     <li class="menu-item"><a href="/users/stafflogout">Log Out</a></li>

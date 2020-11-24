@@ -108,10 +108,12 @@
                 if (session == "session_empty") {
                     window.location.href = "/users/stafflogin";
                 } else {
-                    document.getElementById("staffsession").innerHTML = session;
+                    document.getElementById("staffsession").innerHTML ="Hi, " +session;
+                    document.getElementById("staffsession2").innerHTML ="Hi, " +session;
                 }
             } else {
                 document.getElementById("staffsession").innerHTML = "<span class='spinner-border'></span>";
+                document.getElementById("staffsession2").innerHTML = "<span class='spinner-border'></span>";
             }
         };
         xml.open("POST", "./staffaction", true);
