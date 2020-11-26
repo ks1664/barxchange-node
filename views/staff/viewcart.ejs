@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta http-equiv="content-type" content="text/html;charset=UTF-8"/>
+<head>
+    <title>Wines</title>
+    <%- include('../headerfiles') %>
+</head>
+<body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
+<%- include('staffheader') %>
+<div class="super_container">
+    <div class="home">
+        <div class="parallax_background parallax-window" data-parallax="scroll" data-image-src="../images/menu.jpg"
+             data-speed="0.8"></div>
+        <div class="home_container">
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <div class="home_content text-center">
+                            <div class="home_subtitle page_subtitle">The Venue</div>
+                            <div class="home_title"><h1>The Cart</h1></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+
+        <div class="site-section  pb-0">
+            <div class="row">
+                <form class="col-md-12" method="post">
+                    <h2 class="mb-sm-4 mb-3">Your shopping cart contains:
+                        <span> <?php echo count($ar); ?> Products</span>
+                    </h2>
+                    <div class="site-blocks-table">
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th class="product-price">Sr no.</th>
+                                <th class="product-thumbnail">Image</th>
+                                <th class="product-name">Product</th>
+                                <th class="product-price">Price</th>
+                                <th class="product-quantity">Quantity</th>
+                                <th class="product-total">Total</th>
+                                <th class="product-remove">Remove</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <?php
+                            $k = 0;
+                            $grandTotal = 0;
+                            foreach ($ar as $item) {
+                                $k++;
+                                $discountedPrice = round($item->price - (($item->price * $item->discount) / 100), 2);
+                            $netprice = $discountedPrice * $item->qty;
+                            $grandTotal += $netprice;
+                            ?>
+                            <tr>
+                                <td class="product-price"><?php echo $k; ?></td>
+                                <td class="product-thumbnail">
+                                    <img src="<?php echo $item->photo; ?>" alt="Image" class="img-fluid">
+                                </td>
+                                <td class="product-name">
+                                    <h2 class="h5 cart-product-title text-black"><?php echo $item->productname; ?></h2>
+                                </td>
+                                <td><i class="fa fa-rupee"></i>&nbsp;<?php echo $discountedPrice; ?></td>
+                                <td>
+                                    <div class="input-group mb-3" style="max-width: 120px;">
+                                        <div class="input-group-prepend">
+                                            <button type="button" data-toggle="tooltip" title="Remove"
+                                                    class="text-dark entry btn btn-outline-primary js-btn-minus"
+                                                    onclick="changeQty(<?php echo $item->id; ?>,'minus',<?php echo $item->stock ?>)">
+                                                <i id="minusicon-<?php echo $item->id; ?>"
+                                                   class="fa fa-minus <?php if ($item->qty <= 1) {
+                                                           echo " disabled";
+                                                } ?>"></i></button>
+                                        </div>
+                                        <input type="text" name="quantity-<?php echo $item->id; ?>"
+                                               id="quantity-<?php echo $item->id; ?>"
+                                               value="<?php echo $item->qty; ?>" readonly
+                                               class="form-control text-center border mr-0" placeholder=""
+                                               aria-label="Example text with button addon"
+                                               data-rule-required="true" data-rule-min="1"
+                                               aria-describedby="button-addon1">
+                                        <div class="input-group-append">
+                                            <button type="button"
+                                                    onclick="changeQty(<?php echo $item->id; ?>,'plus',<?php echo $item->stock ?>)"
+                                                    data-toggle="tooltip"
+                                                    title="Update"
+                                                    class="text-dark entry btn btn-outline-primary js-btn-plus">
+                                                <i id="plusicon-<?php echo $item->id; ?>"
+                                                   class="fa fa-plus <?php if ($item->qty >= $item->stock) {
+                                                           echo " disabled";
+                                                } ?>"></i></button>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td id="netprice-<?php echo $item->id; ?>"><i
+                                            class="fa fa-rupee"></i>&nbsp;<?php echo $netprice; ?></td>
+                                <td><a onclick="return confirm('Are you sure you want to Delete?')"
+                                       href="deleteCart.php?q=<?php echo $item->id; ?>"
+                                       class="btn btn-primary height-auto btn-sm">X</a></td>
+                            </tr>
+                            <?php
+                            }
+                            ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="site-section pt-5 bg-light">
+        <div class="container">
+            <form action="insertPayment.php" method="post" id="form1">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="row mb-5">
+                            <div class="col-md-6">
+                                <a href="menu.php" class="btn btn-outline-primary btn-md btn-block">Continue
+                                    Shopping</a>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="mobile">Enter Customer Mobile No.</label>
+                                <input minlength="10" maxlength="10" data-rule-number="true" data-rule-required="true"
+                                       type="text" name="mobile" id="mobile"
+                                       class="form-control">
+                                <label for="mobile">Select Mode Of Payment</label>
+                                <select data-rule-required="true" name="paymentmode" class="dropdown form-control"
+                                        id="paymentmode">
+                                    <option value="">Select Payment Method</option>
+                                    <option value="Cash">Cash</option>
+                                    <option value="Online">Online</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 pl-5">
+                        <div class="row justify-content-end">
+                            <div class="col-md-7">
+                                <div class="row">
+                                    <div class="col-md-12 text-right border-bottom mb-5">
+                                        <h3 class="text-black h4 text-uppercase">Cart Totals</h3>
+                                    </div>
+                                </div>
+                                <div class="row mb-5">
+                                    <div class="col-md-6">
+                                        <span class="text-black">Total</span>
+                                    </div>
+                                    <div class="col-md-6 text-right">
+                                        <strong class="text-black" id="grandTotal"><i
+                                                    class="fa fa-rupee"></i>&nbsp;<?php echo $grandTotal; ?></strong>
+                                        <input type="hidden" name="grandtotal" id="grandTotalwer"
+                                               value="<?php echo $grandTotal; ?>">
+                                        <input type="hidden" id="emailid" value="<?php echo $user_row[" staffname"];
+                                        ?>">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <button class="btn btn-primary btn-lg btn-block" type="submit">Place Order
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<%- include('../footer2') %>
+<script src="../myjs/myjsforformvalidator.js"></
+>
+</body>
+
+<!-- Mirrored from colorlib.com/preview/theme/wines/cart.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 18 Apr 2020 13:11:22 GMT -->
+</html>
