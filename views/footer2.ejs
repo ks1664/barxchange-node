@@ -5,14 +5,15 @@
             <div class="col-lg-3 footer_col">
                 <div class="footer_logo">
                     <div class="footer_logo_title">The Venue</div>
-                   <div class="footer_logo_subtitle">restaurant</div>
+                    <div class="footer_logo_subtitle">restaurant</div>
                 </div>
                 <div class="copyright">
                     <p style="line-height: 1.2;">Copyright &copy;<script>
                             document.write(new Date().getFullYear());
                         </script>
                         All rights reserved <i class="fa fa-heart-o"
-                                               aria-hidden="true"></i> by <a  href="" target="_blank">Node Developer</a></p>
+                                               aria-hidden="true"></i> by <a href="" target="_blank">Node Developer</a>
+                    </p>
                 </div>
             </div>
 
@@ -85,7 +86,11 @@
         type="ca1993f4c51f9e13cc1f22eb-text/javascript"></script>
 <script>
     window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
+
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+
     gtag('js', new Date());
 
     gtag('config', 'UA-23581568-13');
@@ -108,8 +113,8 @@
                 if (session == "session_empty") {
                     window.location.href = "/users/stafflogin";
                 } else {
-                    document.getElementById("staffsession").innerHTML ="Hi, " +session;
-                    document.getElementById("staffsession2").innerHTML ="Hi, " +session;
+                    document.getElementById("staffsession").innerHTML = "Hi, " + session;
+                    document.getElementById("staffsession2").innerHTML = "Hi, " + session;
                 }
             } else {
                 document.getElementById("staffsession").innerHTML = "<span class='spinner-border'></span>";
@@ -120,4 +125,29 @@
         xml.send(formdata);
     }
 
+    function checkcart() {
+        // alert();
+        let formdata = new FormData();
+        formdata.append("action", "checkcart");
+        var xml = new XMLHttpRequest();
+        xml.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var cartcount = this.responseText;
+                // alert(session);
+                // console.log(ar);
+                if (session == "cart_empty") {
+                    document.getElementById("cartcount").innerHTML = "0";
+                    document.getElementById("cartcount2").innerHTML = "0";
+                } else {
+                    document.getElementById("cartcount").innerHTML = cartcount;
+                    document.getElementById("cartcount2").innerHTML = cartcount;
+                }
+            } else {
+                document.getElementById("cartcount").innerHTML = "<span class='spinner-border'></span>";
+                document.getElementById("cartcount2").innerHTML = "<span class='spinner-border'></span>";
+            }
+        };
+        xml.open("POST", "./addtocart", true);
+        xml.send(formdata);
+    }
 </script>

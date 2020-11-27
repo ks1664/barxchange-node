@@ -3,9 +3,14 @@
   <component name="ChangeListManager">
     <list default="true" id="817141e3-a89d-47a0-8478-7b1bb607accc" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/users.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/users.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/footer2.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/footer2.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/headerfiles.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/headerfiles.ejs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/staff/menu.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/staff/menu.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/staff/staffheader.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/staff/staffheader.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/staff/staff_changepassword.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/staff/staff_changepassword.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/staff/staff_home.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/staff/staff_home.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/staff/staff_login.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/staff/staff_login.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/staff/viewcart.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/staff/viewcart.ejs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,16 +53,16 @@
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\barxchangenode\views" />
+      <recent name="D:\barxchangenode\views\staff" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\barxchangenode\views\staff" />
       <recent name="D:\barxchangenode\views" />
       <recent name="D:\barxchangenode\public\photo" />
       <recent name="D:\barxchangenode\views\admin" />
       <recent name="D:\node_projects\barxchangenode\views\admin" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\barxchangenode\views" />
-      <recent name="D:\barxchangenode\views\staff" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -88,7 +93,11 @@
       <workItem from="1606125878552" duration="492000" />
       <workItem from="1606132466422" duration="675000" />
       <workItem from="1606191809096" duration="647000" />
-      <workItem from="1606193264500" duration="2002000" />
+      <workItem from="1606193264500" duration="8791000" />
+      <workItem from="1606276958644" duration="11610000" />
+      <workItem from="1606366456754" duration="35000" />
+      <workItem from="1606366584051" duration="13694000" />
+      <workItem from="1606449804059" duration="2825000" />
     </task>
     <task id="LOCAL-00001" summary="staff_login">
       <created>1605781519821</created>
@@ -139,7 +148,35 @@
       <option name="project" value="LOCAL" />
       <updated>1606114552474</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="menu complete">
+      <created>1606196077159</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1606196077159</updated>
+    </task>
+    <task id="LOCAL-00009" summary="menu complete">
+      <created>1606392320990</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1606392320990</updated>
+    </task>
+    <task id="LOCAL-00010" summary="menu complete">
+      <created>1606392341467</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1606392341467</updated>
+    </task>
+    <task id="LOCAL-00011" summary="menu complete">
+      <created>1606392365831</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1606392365831</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -152,38 +189,42 @@
     <option name="LAST_COMMIT_MESSAGE" value="menu complete" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="308" y="0" key="CommitChangelistDialog2" timestamp="1606114551428">
+    <state x="308" y="0" key="CommitChangelistDialog2" timestamp="1606392364943">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="308" y="0" key="CommitChangelistDialog2/0.0.1366.728@0.0.1366.728" timestamp="1606114551428" />
-    <state width="1323" height="175" key="GridCell.Tab.0.bottom" timestamp="1606193623630">
+    <state x="308" y="0" key="CommitChangelistDialog2/0.0.1366.728@0.0.1366.728" timestamp="1606392364943" />
+    <state width="1323" height="166" key="GridCell.Tab.0.bottom" timestamp="1606452618499">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="175" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1606193623630" />
+    <state width="1323" height="166" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1606452618499" />
     <state width="1493" height="210" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1605184440428" />
-    <state width="1323" height="175" key="GridCell.Tab.0.center" timestamp="1606193623630">
+    <state width="1323" height="166" key="GridCell.Tab.0.center" timestamp="1606452618499">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="175" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1606193623630" />
+    <state width="1323" height="166" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1606452618499" />
     <state width="1493" height="210" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1605184440428" />
-    <state width="1323" height="175" key="GridCell.Tab.0.left" timestamp="1606193623630">
+    <state width="1323" height="166" key="GridCell.Tab.0.left" timestamp="1606452618498">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="175" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1606193623630" />
+    <state width="1323" height="166" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1606452618498" />
     <state width="1493" height="210" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1605184440427" />
-    <state width="1323" height="175" key="GridCell.Tab.0.right" timestamp="1606193623630">
+    <state width="1323" height="166" key="GridCell.Tab.0.right" timestamp="1606452618499">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="175" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1606193623630" />
+    <state width="1323" height="166" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1606452618499" />
     <state width="1493" height="210" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1605184440428" />
+    <state x="263" y="106" key="IDE.errors.dialog" timestamp="1606196091372">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="263" y="106" key="IDE.errors.dialog/0.0.1366.728@0.0.1366.728" timestamp="1606196091372" />
     <state x="184" y="8" key="SettingsEditor" timestamp="1605529522957">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="184" y="8" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1605529522957" />
-    <state x="275" y="96" key="Vcs.Push.Dialog.v2" timestamp="1606196054754">
+    <state x="275" y="96" key="Vcs.Push.Dialog.v2" timestamp="1606390315801">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="275" y="96" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1606196054754" />
+    <state x="275" y="96" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1606390315801" />
     <state x="500" y="277" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1606196065795">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -192,10 +233,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="339" y="162" width="672" height="677" key="run.anything.popup/0.0.1366.728@0.0.1366.728" timestamp="1605938284254" />
-    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup" timestamp="1605611893876">
+    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup" timestamp="1606369733379">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup/0.0.1366.728@0.0.1366.728" timestamp="1605611893876" />
+    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup/0.0.1366.728@0.0.1366.728" timestamp="1606369733379" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -209,6 +250,16 @@
           <url>file://$PROJECT_DIR$/routes/admin.js</url>
           <line>353</line>
           <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/routes/users.js</url>
+          <line>88</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/routes/users.js</url>
+          <line>41</line>
+          <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

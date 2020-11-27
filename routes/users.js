@@ -28,15 +28,17 @@ router.get("/staff_changepassword", (req, res) => {
 
 router.get("/stafflogout", (req, res) => {
     Session.staff = "";
-    console.log(Session.staff);
+    // console.log(Session.staff);
     res.render("staff/staff_login.ejs")
+})
+
+router.get('/viewcart', function (req, res) {
+    res.render("staff/viewcart.ejs")
 })
 
 router.post("/staffaction", (req, res) => {
 
         let action = req.body.action;
-
-
         let Query = '';
 
         if (action == "login") {
@@ -47,10 +49,10 @@ router.post("/staffaction", (req, res) => {
             conn.query(Query, function (err, rows) {
                 if (err) throw err;
                 if (rows.length > 0) {
+                    let staffdata = rows;
                     Session.staff = username;
-                    Session.type = rows.type;
-                    console.log(rows.type);
-                    console.log(Session.type);
+                    Session.type = staffdata[0]["type"];
+                    // console.log(Session.type);
                     res.send("0");
                 } else {
                     res.send("1");
@@ -125,5 +127,87 @@ router.post("/menuaction", (req, res) => {
         }
     }
 )
+
+
+router.post("/addtoCart", (req, res) => {
+    let qty, sqldata, flag;
+    let cart = [];
+    let action = req.body.action;
+    if (action == "addtocart") {
+        let productid = req.body.productid;
+        let qtyval = req.body.qty;
+        if (qtyval == 'index') {
+            qty = 1;
+        } else {
+            qty = qtyval;
+        }
+        Query = "select * from product where productid='" + productid + "'";
+        conn.query(Query, function (err, rows) {
+            if (err) throw  err;
+            // console.log("1------>" + err);
+            sqldata = rows;
+            // console.log("---->", sqldata);
+            if (Session.cart != null) {
+                cart = Session.cart;
+                flag = 0;
+                // console.log("Reach1");
+                for (var i = 0; i <= cart.length - 1; i++) {
+                    // console.log("Reach");
+                    // console.log(productid);
+                    // console.log(cart[i]["productid"]);
+                    if (productid == cart[i].productid) {
+                        if (qty == 'index') {
+                            cart[i]["qty"] += 1;
+                        } else {
+                            cart[i]["qty"] = qty;
+                        }
+                        flag = 1;
+                        break;
+                    }
+                }
+                if (flag == 0) {
+                    // console.log("Reach 2");
+                    cart[cart.length] = {
+                        'productid': sqldata[0]['productid'],
+                        'productname': sqldata[0]['productname'],
+                        'price': sqldata[0]['price'],
+                        'discount': sqldata[0]['discount'],
+                        'stock': sqldata[0]['stock'],
+                        'photo': sqldata[0]['photo'],
+                        'qty': qty,
+                        'subcatid': sqldata[0]['subcatid']
+                    };
+                }
+                Session.cart = cart;
+                // console.log(cart);
+            } else {
+                // console.log("Reach 3 .1" + sqldata);
+                // console.log("Reach 3.2" + sqldata[0]['productid']);
+                cart[0] = {
+                    'productid': sqldata[0]['productid'],
+                    'productname': sqldata[0]['productname'],
+                    'price': sqldata[0]['price'],
+                    'discount': sqldata[0]['discount'],
+                    'stock': sqldata[0]['stock'],
+                    'photo': sqldata[0]['photo'],
+                    'qty': qty,
+                    'subcatid': sqldata[0]['subcatid']
+                };
+                Session.cart = cart;
+                // console.log(Session.cart);
+            }
+            res.send("" + cart.length);
+        })
+
+
+    } else if (action == "checkcart") {
+        if (Session.cart != "" && Session.cart != null) {
+            res.send(""+Session.cart.length);
+        } else {
+            res.send('cart_empty');
+        }
+    }
+})
+
 
 module.exports = router;
