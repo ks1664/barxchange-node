@@ -115,6 +115,7 @@
                 } else {
                     document.getElementById("staffsession").innerHTML = "Hi, " + session;
                     document.getElementById("staffsession2").innerHTML = "Hi, " + session;
+                    // document.getElementById("emailid").value = session;
                 }
             } else {
                 document.getElementById("staffsession").innerHTML = "<span class='spinner-border'></span>";
@@ -135,7 +136,7 @@
                 var cartcount = this.responseText;
                 // alert(session);
                 // console.log(ar);
-                if (session == "cart_empty") {
+                if (cartcount == "cart_empty") {
                     document.getElementById("cartcount").innerHTML = "0";
                     document.getElementById("cartcount2").innerHTML = "0";
                 } else {

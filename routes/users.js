@@ -202,10 +202,17 @@ router.post("/addtoCart", (req, res) => {
 
     } else if (action == "checkcart") {
         if (Session.cart != "" && Session.cart != null) {
-            res.send(""+Session.cart.length);
+            res.send("" + Session.cart.length);
         } else {
             res.send('cart_empty');
         }
+    } else if (action == 'cartview') {
+        let cart = [];
+        if (Session.cart != undefined) {
+            cart = Session.cart;
+        }
+        let obj = {cart: cart}
+        res.send(cart)
     }
 })
 

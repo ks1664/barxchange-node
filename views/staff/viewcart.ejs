@@ -30,10 +30,10 @@
             <div class="row">
                 <form class="col-md-12" method="post">
                     <h2 class="mb-sm-4 mb-3">Your shopping cart contains:
-                        <span> <?php echo count($ar); ?> Products</span>
+                        <span id="cartcount2" style="color: red"></span> Products
                     </h2>
                     <div class="site-blocks-table">
-                        <table class="table table-bordered">
+                        <table class="table table-bordered" id="mycart">
                             <thead>
                             <tr>
                                 <th class="product-price">Sr no.</th>
@@ -45,16 +45,7 @@
                                 <th class="product-remove">Remove</th>
                             </tr>
                             </thead>
-                            <tbody>
-                            <?php
-                            $k = 0;
-                            $grandTotal = 0;
-                            foreach ($ar as $item) {
-                                $k++;
-                                $discountedPrice = round($item->price - (($item->price * $item->discount) / 100), 2);
-                            $netprice = $discountedPrice * $item->qty;
-                            $grandTotal += $netprice;
-                            ?>
+                            <tbody id="cartproduct">
                             <tr>
                                 <td class="product-price"><?php echo $k; ?></td>
                                 <td class="product-thumbnail">
@@ -118,7 +109,7 @@
                     <div class="col-md-6">
                         <div class="row mb-5">
                             <div class="col-md-6">
-                                <a href="menu.php" class="btn btn-outline-primary btn-md btn-block">Continue
+                                <a href="/users/menu" class="btn btn-outline-primary btn-md btn-block">Continue
                                     Shopping</a>
                             </div>
                             <div class="col-md-6">
@@ -149,12 +140,10 @@
                                         <span class="text-black">Total</span>
                                     </div>
                                     <div class="col-md-6 text-right">
-                                        <strong class="text-black" id="grandTotal"><i
-                                                    class="fa fa-rupee"></i>&nbsp;<?php echo $grandTotal; ?></strong>
+                                        <strong class="text-black" id="grandTotal"></strong>
                                         <input type="hidden" name="grandtotal" id="grandTotalwer"
-                                               value="<?php echo $grandTotal; ?>">
-                                        <input type="hidden" id="emailid" value="<?php echo $user_row[" staffname"];
-                                        ?>">
+                                               value="">
+                                        <input type="hidden" id="emailid" value="">
                                     </div>
                                 </div>
                                 <div class="row">
@@ -173,5 +162,88 @@
 </div>
 <%- include('../footer2') %>
 <script src="../myjs/myjsforformvalidator.js"></script>
+
+<script>
+    var temptable;
+
+    function showcart() {
+        let formdata = new FormData();
+        formdata.append("action", "cartview");
+        var xml = new XMLHttpRequest();
+        xml.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                // console.log(this.response);
+                var ar = JSON.parse(this.response);
+                var tab = "";
+                var srno = 1;
+                var grandtotal = 0;
+                for (var x in ar) {
+                    obj = ar[x];
+                    var discountedprice = Math.round(obj.price - ((obj.price * obj.discount) / 100), 2);
+                    var netprice = discountedprice * obj.qty;
+                    grandtotal += netprice;
+                    tab += "<tr>";
+                    tab += "<td class=\"product-price\">" + srno + "</td>";
+                    tab += "<td class=\"product-thumbnail\"><img class='img-fluid' src='../" + obj.photo + "' alt=''></td>";
+                    tab += "<td class=\"product-name\"><h2 class=\"h5 cart-product-title text-black\">" + obj.productname + "</h2></td>";
+                    tab += "<td><i class='fa fa-rupee'></i>&nbsp;" + discountedprice + "</td>";
+
+                    tab += "<td class='product-price'><div class=\"input-group mb-3\" style=\"max-width: 120px;\">";
+                    tab += "<div class=\"input-group-prepend\">";
+                    tab += "<button type=\"button\" data-toggle=\"tooltip\" title=\"Remove\" class=\"text-dark entry btn btn-outline-primary js-btn-minus\" onclick='changeQty(obj.productid,'minus',obj.stock)'>";
+                    tab += "<i id='minusicon-" + obj.productid + "' class='";
+                    if (obj.qty <= 1) {
+                        tab += "fa fa-minus disabled'></i>";
+                    } else {
+                        tab += "fa fa-minus'></i>";
+                    }
+                    tab += "</button>";
+
+                    tab += "</div>";
+                    tab += "<input type=\"text\" name='quantity-" + obj.productid + "' id='quantity-" + obj.productid + "' value='" + obj.qty + "' readonly class=\"form-control text-center border mr-0\" aria-label=\"Example text with button addon\" data-rule-required=\"true\" data-rule-min=\"1\" aria-describedby=\"button-addon1\">";
+                    tab += "<div class=\"input-group-append\">";
+                    tab += "<button onclick=\"changeQty(obj.productid,'plus',obj.stock)\" type=\"button\" data-toggle=\"tooltip\" title=\"Update\" class=\"text-dark entry btn btn-outline-primary js-btn-plus\">";
+                    tab += "<i id='plusicon-" + obj.productid + "' class='";
+                    if (obj.qty >= obj.stock) {
+                        tab += "fa fa-plus disabled'></i>";
+                    } else {
+                        tab += "fa fa-plus'></i>";
+                    }
+                    tab += "</button>";
+                    tab += "</div>";
+                    tab += "</div></td>";
+
+                    tab += "<td id='netprice-" + obj.productid + "'><i class='fa fa-rupee'></i>&nbsp;" + netprice + "</td>";
+                    tab += "<td><a href='' onclick='deleteproduct(\"" + obj.productid + "\")'" + " class='btn btn-primary height-auto btn-sm' style='cursor: pointer;'>X</a></td>";
+                    tab += "</tr>";
+                    srno++;
+                }
+                document.getElementById("cartproduct").innerHTML = tab;
+                document.getElementById("grandTotal").innerHTML = "<i class=\"fa fa-rupee\"></i>&nbsp;" + grandtotal;
+                document.getElementById("grandTotalwer").value = grandtotal;
+                try {
+                    if (temptable != undefined) {
+                        temptable.destroy();
+                    }
+                    temptable = $("#mycart").dataTable({
+                        // "bPaginate": false
+                    });
+                } catch (e) {
+                }
+            } else {
+                document.getElementById("cartproduct").innerHTML = "<span class='spinner-border'></span>";
+            }
+        };
+        xml.open("POST", "./addtoCart", true);
+        xml.send(formdata);
+    }
+
+
+    $(document).ready(function () {
+        checksession();
+        checkcart();
+        showcart();
+    })
+</script>
 </body>
 </html>
