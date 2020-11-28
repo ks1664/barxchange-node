@@ -213,6 +213,44 @@ router.post("/addtoCart", (req, res) => {
         }
         let obj = {cart: cart}
         res.send(cart)
+    } else if (action == 'removecart') {
+        let cart = [];
+        if (Session.cart != undefined) {
+            cart = Session.cart;
+        }
+        let obj = {cart: cart}
+        res.send(cart)
+    } else if (action == "changeqty") {
+        let qty = req.body.qty;
+        let productid = req.body.productid;
+        let cart = [];
+        if (Session.cart != undefined) {
+            cart = Session.cart;
+            let flag = 0;
+            let grandtotal = 0;
+            let netprice = 0;
+            // let netpricetotal = 0;
+            for (var i = 0; i <= cart.length - 1; i++) {
+                if (productid == cart[i].productid) {
+                    cart[i].qty = qty;
+                    let discountedprice = Math.round(cart[i].price - ((cart[i].price * cart[i].discount) / 100), 2);
+                    netprice = discountedprice * cart[i].qty;
+                    flag = 1;
+                    break;
+                }
+            }
+            for (var j = 0; j <= cart.length - 1; j++) {
+                let discounedpricetotal = Math.round(cart[j].price - ((cart[j].price * cart[j].discount) / 100), 2);
+                // console.log(discounedpricetotal);
+                let netpricetotal = discounedpricetotal * cart[j].qty;
+                // console.log(netpricetotal);
+                grandtotal += netpricetotal;
+                // console.log(grandtotal);
+            }
+            let newar = {"qty": qty, "netprice": Math.round(netprice, 2), "grandtotal": Math.round(grandtotal, 2)};
+            // console.log(JSON.stringify(newar));
+            res.send(JSON.stringify(newar));
+        }
     }
 })
 

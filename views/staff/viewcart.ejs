@@ -29,11 +29,11 @@
         <div class="site-section  pb-0">
             <div class="row">
                 <form class="col-md-12" method="post">
-                    <h2 class="mb-sm-4 mb-3">Your shopping cart contains:
+                    <h4 class="mb-sm-4 mb-3">Your shopping cart contains:
                         <span id="cartcount2" style="color: red"></span> Products
-                    </h2>
+                    </h4>
                     <div class="site-blocks-table">
-                        <table class="table table-bordered" id="mycart">
+                        <table class="table table-bordered table-sm" id="mycart">
                             <thead>
                             <tr>
                                 <th class="product-price">Sr no.</th>
@@ -46,55 +46,55 @@
                             </tr>
                             </thead>
                             <tbody id="cartproduct">
-                            <tr>
-                                <td class="product-price"><?php echo $k; ?></td>
-                                <td class="product-thumbnail">
-                                    <img src="<?php echo $item->photo; ?>" alt="Image" class="img-fluid">
-                                </td>
-                                <td class="product-name">
-                                    <h2 class="h5 cart-product-title text-black"><?php echo $item->productname; ?></h2>
-                                </td>
-                                <td><i class="fa fa-rupee"></i>&nbsp;<?php echo $discountedPrice; ?></td>
-                                <td>
-                                    <div class="input-group mb-3" style="max-width: 120px;">
-                                        <div class="input-group-prepend">
-                                            <button type="button" data-toggle="tooltip" title="Remove"
-                                                    class="text-dark entry btn btn-outline-primary js-btn-minus"
-                                                    onclick="changeQty(<?php echo $item->id; ?>,'minus',<?php echo $item->stock ?>)">
-                                                <i id="minusicon-<?php echo $item->id; ?>"
-                                                   class="fa fa-minus <?php if ($item->qty <= 1) {
-                                                           echo " disabled";
-                                                } ?>"></i></button>
-                                        </div>
-                                        <input type="text" name="quantity-<?php echo $item->id; ?>"
-                                               id="quantity-<?php echo $item->id; ?>"
-                                               value="<?php echo $item->qty; ?>" readonly
-                                               class="form-control text-center border mr-0" placeholder=""
-                                               aria-label="Example text with button addon"
-                                               data-rule-required="true" data-rule-min="1"
-                                               aria-describedby="button-addon1">
-                                        <div class="input-group-append">
-                                            <button type="button"
-                                                    onclick="changeQty(<?php echo $item->id; ?>,'plus',<?php echo $item->stock ?>)"
-                                                    data-toggle="tooltip"
-                                                    title="Update"
-                                                    class="text-dark entry btn btn-outline-primary js-btn-plus">
-                                                <i id="plusicon-<?php echo $item->id; ?>"
-                                                   class="fa fa-plus <?php if ($item->qty >= $item->stock) {
-                                                           echo " disabled";
-                                                } ?>"></i></button>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td id="netprice-<?php echo $item->id; ?>"><i
-                                            class="fa fa-rupee"></i>&nbsp;<?php echo $netprice; ?></td>
-                                <td><a onclick="return confirm('Are you sure you want to Delete?')"
-                                       href="deleteCart.php?q=<?php echo $item->id; ?>"
-                                       class="btn btn-primary height-auto btn-sm">X</a></td>
-                            </tr>
-                            <?php
-                            }
-                            ?>
+                            <!--                            <tr>-->
+                            <!--                                <td class="product-price"><?php echo $k; ?></td>-->
+                            <!--                                <td class="product-thumbnail">-->
+                            <!--                                    <img src="<?php echo $item->photo; ?>" alt="Image" class="img-fluid">-->
+                            <!--                                </td>-->
+                            <!--                                <td class="product-name">-->
+                            <!--                                    <h2 class="h5 cart-product-title text-black"><?php echo $item->productname; ?></h2>-->
+                            <!--                                </td>-->
+                            <!--                                <td><i class="fa fa-rupee"></i>&nbsp;<?php echo $discountedPrice; ?></td>-->
+                            <!--                                <td>-->
+                            <!--                                    <div class="input-group mb-3" style="max-width: 120px;">-->
+                            <!--                                        <div class="input-group-prepend">-->
+                            <!--                                            <button type="button" data-toggle="tooltip" title="Remove"-->
+                            <!--                                                    class="text-dark entry btn btn-outline-primary js-btn-minus"-->
+                            <!--                                                    onclick="changeQty(<?php echo $item->id; ?>,'minus',<?php echo $item->stock ?>)">-->
+                            <!--                                                <i id="minusicon-<?php echo $item->id; ?>"-->
+                            <!--                                                   class="fa fa-minus <?php if ($item->qty <= 1) {-->
+                            <!--                                                           echo " disabled";-->
+                            <!--                                                } ?>"></i></button>-->
+                            <!--                                        </div>-->
+                            <!--                                        <input type="text" name="quantity-<?php echo $item->id; ?>"-->
+                            <!--                                               id="quantity-<?php echo $item->id; ?>"-->
+                            <!--                                               value="<?php echo $item->qty; ?>" readonly-->
+                            <!--                                               class="form-control text-center border mr-0" placeholder=""-->
+                            <!--                                               aria-label="Example text with button addon"-->
+                            <!--                                               data-rule-required="true" data-rule-min="1"-->
+                            <!--                                               aria-describedby="button-addon1">-->
+                            <!--                                        <div class="input-group-append">-->
+                            <!--                                            <button type="button"-->
+                            <!--                                                    onclick="changeQty(<?php echo $item->id; ?>,'plus',<?php echo $item->stock ?>)"-->
+                            <!--                                                    data-toggle="tooltip"-->
+                            <!--                                                    title="Update"-->
+                            <!--                                                    class="text-dark entry btn btn-outline-primary js-btn-plus">-->
+                            <!--                                                <i id="plusicon-<?php echo $item->id; ?>"-->
+                            <!--                                                   class="fa fa-plus <?php if ($item->qty >= $item->stock) {-->
+                            <!--                                                           echo " disabled";-->
+                            <!--                                                } ?>"></i></button>-->
+                            <!--                                        </div>-->
+                            <!--                                    </div>-->
+                            <!--                                </td>-->
+                            <!--                                <td id="netprice-<?php echo $item->id; ?>"><i-->
+                            <!--                                            class="fa fa-rupee"></i>&nbsp;<?php echo $netprice; ?></td>-->
+                            <!--                                <td><a onclick="return confirm('Are you sure you want to Delete?')"-->
+                            <!--                                       href="deleteCart.php?q=<?php echo $item->id; ?>"-->
+                            <!--                                       class="btn btn-primary height-auto btn-sm">X</a></td>-->
+                            <!--                            </tr>-->
+                            <!--                            <?php-->
+                            <!--                            }-->
+                            <!--                            ?>-->
                             </tbody>
                         </table>
                     </div>
@@ -184,13 +184,13 @@
                     grandtotal += netprice;
                     tab += "<tr>";
                     tab += "<td class=\"product-price\">" + srno + "</td>";
-                    tab += "<td class=\"product-thumbnail\"><img class='img-fluid' src='../" + obj.photo + "' alt=''></td>";
+                    tab += "<td class=\"product-thumbnail\"><img class='img-fluid' style='width: 150px;height: 100px' src='../" + obj.photo + "' alt=''></td>";
                     tab += "<td class=\"product-name\"><h2 class=\"h5 cart-product-title text-black\">" + obj.productname + "</h2></td>";
                     tab += "<td><i class='fa fa-rupee'></i>&nbsp;" + discountedprice + "</td>";
 
                     tab += "<td class='product-price'><div class=\"input-group mb-3\" style=\"max-width: 120px;\">";
                     tab += "<div class=\"input-group-prepend\">";
-                    tab += "<button type=\"button\" data-toggle=\"tooltip\" title=\"Remove\" class=\"text-dark entry btn btn-outline-primary js-btn-minus\" onclick='changeQty(obj.productid,'minus',obj.stock)'>";
+                    tab += "<button type=\"button\" data-toggle=\"tooltip\" title=\"Remove\" class=\"text-dark entry btn btn-outline-primary js-btn-minus\" onclick=\"changeQty(" + obj.productid + ",'minus'," + obj.stock + ")\">";
                     tab += "<i id='minusicon-" + obj.productid + "' class='";
                     if (obj.qty <= 1) {
                         tab += "fa fa-minus disabled'></i>";
@@ -200,9 +200,9 @@
                     tab += "</button>";
 
                     tab += "</div>";
-                    tab += "<input type=\"text\" name='quantity-" + obj.productid + "' id='quantity-" + obj.productid + "' value='" + obj.qty + "' readonly class=\"form-control text-center border mr-0\" aria-label=\"Example text with button addon\" data-rule-required=\"true\" data-rule-min=\"1\" aria-describedby=\"button-addon1\">";
+                    tab += "<input type=\"number\" name='quantity-" + obj.productid + "' id='quantity-" + obj.productid + "' value='" + obj.qty + "' readonly class=\"form-control text-center border mr-0\" aria-label=\"Example text with button addon\" data-rule-required=\"true\" data-rule-min=\"1\" aria-describedby=\"button-addon1\">";
                     tab += "<div class=\"input-group-append\">";
-                    tab += "<button onclick=\"changeQty(obj.productid,'plus',obj.stock)\" type=\"button\" data-toggle=\"tooltip\" title=\"Update\" class=\"text-dark entry btn btn-outline-primary js-btn-plus\">";
+                    tab += "<button onclick=\"changeQty(" + obj.productid + ",'plus'," + obj.stock + ")\" type=\"button\" data-toggle=\"tooltip\" title=\"Update\" class=\"text-dark entry btn btn-outline-primary js-btn-plus\">";
                     tab += "<i id='plusicon-" + obj.productid + "' class='";
                     if (obj.qty >= obj.stock) {
                         tab += "fa fa-plus disabled'></i>";
@@ -212,7 +212,6 @@
                     tab += "</button>";
                     tab += "</div>";
                     tab += "</div></td>";
-
                     tab += "<td id='netprice-" + obj.productid + "'><i class='fa fa-rupee'></i>&nbsp;" + netprice + "</td>";
                     tab += "<td><a href='' onclick='deleteproduct(\"" + obj.productid + "\")'" + " class='btn btn-primary height-auto btn-sm' style='cursor: pointer;'>X</a></td>";
                     tab += "</tr>";
@@ -236,6 +235,50 @@
         };
         xml.open("POST", "./addtoCart", true);
         xml.send(formdata);
+    }
+
+    function changeQty(productid, type, stock) {
+        var quantity = parseInt(document.getElementById("quantity-" + productid).value);
+        let formdata = new FormData();
+        formdata.append("action", "changeqty");
+        formdata.append("productid", productid);
+        var flag;
+        if (type == 'plus') {
+            if (quantity >= stock) {
+                document.getElementById("plusicon-" + productid).className = "fa fa-plus disabled";
+                flag = 0;
+            } else {
+                document.getElementById("minusicon-" + productid).className = "fa fa-minus";
+                document.getElementById("plusicon-" + productid).className = "fa fa-plus";
+                quantity += 1;
+                // console.log("--->",quantity)
+            }
+        } else if (type == 'minus') {
+            if (quantity > 1) {
+                quantity -= 1;
+                // console.log("====>",quantity)
+                document.getElementById("minusicon-" + productid).className = "fa fa-minus";
+            } else {
+                document.getElementById("minusicon-" + productid).className = "fa fa-minus disabled";
+                flag = 0;
+            }
+        }
+        formdata.append("qty", quantity);
+        if (flag != 0) {
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function () {
+                if (this.status == 200 && this.readyState == 4) {
+                    var output = JSON.parse(this.responseText);
+                    // console.log( output.qty);
+                    document.getElementById("quantity-" + productid).value = output.qty;
+                    document.getElementById("netprice-" + productid).innerHTML = "<i class='fa fa-rupee'></i>&nbsp;" + output.netprice;
+                    document.getElementById("grandTotal").innerHTML = "<i class='fa fa-rupee'></i>&nbsp;" + output.grandtotal;
+                    document.getElementById("grandTotalwer").value = output.grandtotal;
+                }
+            };
+            xmlhttp.open("POST", "./addtoCart", true);
+            xmlhttp.send(formdata);
+        }
     }
 
 
