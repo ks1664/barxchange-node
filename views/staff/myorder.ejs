@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>View Daily Orders</title>
+    <%- include('../headerfiles') %>
+</head>
+<body>
+<%- include('staffheader') %>
+<div class="super_container">
+    <div class="home">
+        <div class="parallax_background parallax-window" data-parallax="scroll" data-image-src="../images/menu.jpg"
+             data-speed="0.8"></div>
+        <div class="home_container">
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <div class="home_content text-center">
+                            <div class="home_subtitle page_subtitle">The Venue</div>
+                            <div class="home_title"><h1>Daily Orders</h1></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-around">
+        <h3>Your Daily Order History</h3>
+    </div>
+    <table class="table table-bordered mt-4">
+        <thead>
+        <tr>
+            <th>Sr no.</th>
+            <th>Order Id</th>
+            <th>Order Date Time</th>
+            <th>Customer no.</th>
+            <th>Payment Method</th>
+            <th>Grand Total</th>
+            <th>Status</th>
+            <th>View Detail</th>
+        </tr>
+        </thead>
+        <tbody id="orderdata">
+        <?php
+        date_default_timezone_set("Asia/Kolkata");
+        $currentDateTime = date('Y-m-d');
+        $k = 0;
+        $order = "SELECT * FROM `order` where date(datetime)='$currentDateTime' and staffname='$email'";
+        $result = mysqli_query($conn, $order);
+        while ($bill = mysqli_fetch_array($result)) {
+            $k++;
+            ?>
+        <tr>
+            <td><?php echo $k; ?></td>
+            <td><?php echo $bill["orderid"]; ?></td>
+            <td><?php echo $bill["datetime"]; ?></td>
+            <td><?php echo $bill["mobile"]; ?></td>
+            <td><?php echo $bill["paymentmode"]; ?></td>
+            <td><i class="fa fa-rupee"></i>&nbsp;<?php echo $bill["amount"]; ?></td>
+            <td><?php echo $bill["status"]; ?></td>
+            <td><a href="billdetail.php?q=<?php echo $bill[" orderid"]; ?>"><i class="fa fa-s15 fa-info-circle"></i></a>
+            </td>
+        </tr>
+        <?php
+        }
+        ?>
+        </tbody>
+    </table>
+
+</div>
+<%- include('../footer2') %>
+<script>
+
+    $(document).ready(function () {
+        checksession();
+        checkcart();
+    })
+</script>
+</body>
+</html>
+<?php

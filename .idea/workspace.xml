@@ -1,9 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="817141e3-a89d-47a0-8478-7b1bb607accc" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/views/staff/myorder.ejs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/users.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/users.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/staff/thanks.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/staff/thanks.ejs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/staff/viewcart.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/staff/viewcart.ejs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -32,9 +52,9 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="javascript.nodejs.core.library.configured.version" value="14.15.0" />
-    <property name="javascript.nodejs.core.library.typings.version" value="14.14.7" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/views/staff" />
+    <property name="javascript.nodejs.core.library.configured.version" value="14.15.1" />
+    <property name="javascript.nodejs.core.library.typings.version" value="14.14.10" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../node_project" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -43,7 +63,7 @@
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_interpreter_path" value="node" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="configurable.group.appearance" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
@@ -97,6 +117,17 @@
       <workItem from="1606539677548" duration="1667000" />
       <workItem from="1606541382554" duration="1028000" />
       <workItem from="1606542424799" duration="9836000" />
+      <workItem from="1606557745578" duration="297000" />
+      <workItem from="1606709163213" duration="245000" />
+      <workItem from="1606709500505" duration="1449000" />
+      <workItem from="1606711707727" duration="1519000" />
+      <workItem from="1606967929986" duration="17869000" />
+      <workItem from="1607056673298" duration="355000" />
+      <workItem from="1607057137237" duration="47000" />
+      <workItem from="1607057422581" duration="60000" />
+      <workItem from="1607057501507" duration="409000" />
+      <workItem from="1607058037143" duration="978000" />
+      <workItem from="1607059667903" duration="452000" />
     </task>
     <task id="LOCAL-00001" summary="staff_login">
       <created>1605781519821</created>
@@ -189,67 +220,36 @@
       <option name="project" value="LOCAL" />
       <updated>1606481635312</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="menu complete">
+      <created>1606557819395</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1606557819395</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="staff_login" />
     <MESSAGE value="menu" />
     <MESSAGE value="menu complete" />
     <option name="LAST_COMMIT_MESSAGE" value="menu complete" />
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="308" y="0" key="CommitChangelistDialog2" timestamp="1606481634603">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="308" y="0" key="CommitChangelistDialog2/0.0.1366.728@0.0.1366.728" timestamp="1606481634603" />
-    <state width="637" height="161" key="GridCell.Tab.0.bottom" timestamp="1606555596017">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state width="637" height="161" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1606555596017" />
-    <state width="1493" height="210" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1605184440428" />
-    <state width="637" height="161" key="GridCell.Tab.0.center" timestamp="1606555596017">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state width="637" height="161" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1606555596017" />
-    <state width="1493" height="210" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1605184440428" />
-    <state width="637" height="161" key="GridCell.Tab.0.left" timestamp="1606555596016">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state width="637" height="161" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1606555596016" />
-    <state width="1493" height="210" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1605184440427" />
-    <state width="637" height="161" key="GridCell.Tab.0.right" timestamp="1606555596017">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state width="637" height="161" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1606555596017" />
-    <state width="1493" height="210" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1605184440428" />
-    <state x="263" y="106" key="IDE.errors.dialog" timestamp="1606539716665">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="263" y="106" key="IDE.errors.dialog/0.0.1366.728@0.0.1366.728" timestamp="1606539716665" />
-    <state x="184" y="8" key="SettingsEditor" timestamp="1605529522957">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="184" y="8" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1605529522957" />
-    <state x="275" y="96" key="Vcs.Push.Dialog.v2" timestamp="1606552892924">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="275" y="96" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1606552892924" />
-    <state x="500" y="277" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1606196065795">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="500" y="277" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1366.728@0.0.1366.728" timestamp="1606196065795" />
-    <state x="339" y="162" width="672" height="677" key="run.anything.popup" timestamp="1605938284254">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="339" y="162" width="672" height="677" key="run.anything.popup/0.0.1366.728@0.0.1366.728" timestamp="1605938284254" />
-    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup" timestamp="1606541096756">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup/0.0.1366.728@0.0.1366.728" timestamp="1606541096756" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -266,18 +266,18 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/routes/users.js</url>
-          <line>88</line>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/routes/users.js</url>
-          <line>41</line>
+          <line>48</line>
           <option name="timeStamp" value="4" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/public/js/myscript.js</url>
           <line>91</line>
           <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/routes/users.js</url>
+          <line>103</line>
+          <option name="timeStamp" value="6" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

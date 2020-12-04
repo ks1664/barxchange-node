@@ -39,7 +39,9 @@
                                 <th class="product-price">Sr no.</th>
                                 <th class="product-thumbnail">Image</th>
                                 <th class="product-name">Product</th>
-                                <th class="product-price">Price</th>
+                                <th class="product-name">Price</th>
+                                <th class="product-name">Discount</th>
+                                <th class="product-price">Discounted&nbsp;Price</th>
                                 <th class="product-quantity">Quantity</th>
                                 <th class="product-total">Total</th>
                                 <th class="product-remove">Remove</th>
@@ -104,7 +106,7 @@
     </div>
     <div class="site-section pt-5 bg-light">
         <div class="container">
-            <form action="insertPayment.php" method="post" id="form1">
+            <form method="post" id="checkoutform">
                 <div class="row">
                     <div class="col-md-6">
                         <div class="row mb-5">
@@ -113,9 +115,8 @@
                                     Shopping</a>
                             </div>
                             <div class="col-md-6">
-                                <label for="mobile">Enter Customer Mobile No.</label>
-                                <input minlength="10" maxlength="10" data-rule-number="true" data-rule-required="true"
-                                       type="text" name="mobile" id="mobile"
+                                <label for="mobile">Enter Customer Email.</label>
+                                <input data-rule-required="true" type="email" name="mobile" id="mobile"
                                        class="form-control">
                                 <label for="mobile">Select Mode Of Payment</label>
                                 <select data-rule-required="true" name="paymentmode" class="dropdown form-control"
@@ -148,13 +149,17 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <button class="btn btn-primary btn-lg btn-block" type="submit">Place Order
+                                        <button class="btn btn-primary btn-lg btn-block" type="button"
+                                                onclick="checkout()">Place Order
                                         </button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="text-center" id="output">Please fill customer's email and select payment method before
+                    checking out.
                 </div>
             </form>
         </div>
@@ -186,9 +191,10 @@
                     tab += "<td class=\"product-price\">" + srno + "</td>";
                     tab += "<td class=\"product-thumbnail\"><img class='img-fluid' style='width: 150px;height: 100px' src='../" + obj.photo + "' alt=''></td>";
                     tab += "<td class=\"product-name\"><h2 class=\"h5 cart-product-title text-black\">" + obj.productname + "</h2></td>";
+                    tab += "<td><i class='fa fa-rupee'></i>&nbsp;" + obj.price + "</td>";
+                    tab += "<td>" + obj.discount + " %</td>";
                     tab += "<td><i class='fa fa-rupee'></i>&nbsp;" + discountedprice + "</td>";
-
-                    tab += "<td class='product-price'><div class=\"input-group mb-3\" style=\"max-width: 120px;\">";
+                    tab += "<td class='product-price'><div class=\"input-group mx-auto mb-3\" style=\"max-width: 120px;\">";
                     tab += "<div class=\"input-group-prepend\">";
                     tab += "<button type=\"button\" data-toggle=\"tooltip\" title=\"Remove\" class=\"text-dark entry btn btn-outline-primary js-btn-minus\" onclick=\"changeQty(" + obj.productid + ",'minus'," + obj.stock + ")\">";
                     tab += "<i id='minusicon-" + obj.productid + "' class='";
@@ -198,7 +204,6 @@
                         tab += "fa fa-minus'></i>";
                     }
                     tab += "</button>";
-
                     tab += "</div>";
                     tab += "<input type=\"number\" name='quantity-" + obj.productid + "' id='quantity-" + obj.productid + "' value='" + obj.qty + "' readonly class=\"form-control text-center border mr-0\" aria-label=\"Example text with button addon\" data-rule-required=\"true\" data-rule-min=\"1\" aria-describedby=\"button-addon1\">";
                     tab += "<div class=\"input-group-append\">";
@@ -213,7 +218,7 @@
                     tab += "</div>";
                     tab += "</div></td>";
                     tab += "<td id='netprice-" + obj.productid + "'><i class='fa fa-rupee'></i>&nbsp;" + netprice + "</td>";
-                    tab += "<td><a href='' onclick='deleteproduct(\"" + obj.productid + "\")'" + " class='btn btn-primary height-auto btn-sm' style='cursor: pointer;'>X</a></td>";
+                    tab += "<td><a href='' onclick='removecart(\"" + obj.productid + "\")'" + " class='btn btn-primary height-auto btn-sm' style='cursor: pointer;'>X</a></td>";
                     tab += "</tr>";
                     srno++;
                 }
@@ -279,6 +284,53 @@
             xmlhttp.open("POST", "./addtoCart", true);
             xmlhttp.send(formdata);
         }
+    }
+
+    function checkout() {
+        var controls = document.getElementById("checkoutform").elements;
+        var formdata = new FormData();
+        for (var i = 0; i < controls.length; i++) {
+            if (controls[i].type == "file") {
+                formdata.append(controls[i].name, controls[i].files[0]);
+            } else {
+                formdata.append(controls[i].name, controls[i].value);
+            }
+        }
+        var xml = new XMLHttpRequest();
+        xml.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var output = this.responseText;
+                alert(output);
+                document.getElementById('output').innerHTML = "<h3>" + output + "<span class='spinner-border'></span></h3>";
+                document.getElementById("checkoutform").reset();
+                setInterval("movenextfunction1()", 5000);
+            }
+        };
+        xml.open("POST", "./checkout", true);
+        xml.send(formdata);
+    }
+
+    function movenextfunction1() {
+        document.getElementById('output').innerHTML = "";
+        window.location.href = "/users/thanks";
+    }
+
+    function removecart(productid) {
+        let formdata = new FormData();
+        formdata.append("action", 'removecart');
+        formdata.append("productid", productid);
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function () {
+            if (this.status == 200 && this.readyState == 4) {
+                var output = this.responseText;
+                document.getElementById("cartcount").innerHTML = output;
+                alert("1 Item removed Successfully from the Cart");
+                showcart();
+                checkcart();
+            }
+        };
+        xmlhttp.open("POST", "./addtoCart", true);
+        xmlhttp.send(formdata);
     }
 
 
