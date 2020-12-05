@@ -9,17 +9,20 @@
                             <div>restaurant</div>
                         </a>
                     </div>
-                    <nav class="main_nav">
+                    <nav id="navstaff1" class="main_nav">
                         <ul class="d-flex flex-row align-items-center justify-content-start">
-                            <li><a href="/users/menu">menu</a></li>
-                            <li class="menu-item dropdown dropright menu-item-has-children"><a
+                            <li id="kitchenorder"><a href="/users/kitchenorder">Orders</a></li>
+                            <li id="cashierorder"><a href="cashierorder.php">Orders</a></li>
+                            <li id="cashierdailyorder"><a href="cashierdailyorder.php">Daily Orders</a></li>
+                            <li id="menu"><a href="/users/menu">menu</a></li>
+                            <li id="captainorder" class="menu-item dropdown dropright menu-item-has-children"><a
                                         href="/users/myorder">Orders</a>
                             </li>
-                            <li class="cart"><a href="/users/viewcart" class="text-dark-red"><i class="fa fa-cart-arrow-down"></i></a>
+                            <li id="cart" class="cart"><a href="/users/viewcart" class="text-dark-red"><i
+                                            class="fa fa-cart-arrow-down"></i></a>
                                 <span class="cart" id="cartcount"></span>
                             </li>
-                            <li class="menu-item dropdown dropright menu-item-has-children"><a id="staffsession"
-                                        href="">Hi,&nbsp;</a>
+                            <li class="menu-item dropdown dropright menu-item-has-children"><a id="staffsession" href="">Hi,&nbsp;</a>
                                 <ul class="sub-menu">
                                     <li class="menu-item"><a href="/users/staff_changepassword">Change Password</a></li>
                                     <li class="menu-item"><a href="/users/stafflogout">Log Out</a></li>
@@ -51,7 +54,7 @@
 
 <div class="menu trans_800">
     <div class="menu_content d-flex flex-column align-items-center justify-content-center text-center">
-        <ul>
+        <ul id="navstaff2">
             <li><a href="/users/menu">menu</a></li>
             <li><a href="/users/myorder">Orders</a></li>
             <li class="cart"><a href="/users/viewcart" class="text-dark-red"><i class="fa fa-cart-arrow-down"></i></a>

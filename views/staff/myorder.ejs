@@ -30,13 +30,13 @@
     <div class="row justify-content-around">
         <h3>Your Daily Order History</h3>
     </div>
-    <table class="table table-bordered mt-4">
+    <table id="order" class="table table-bordered table-sm table-striped mt-4">
         <thead>
         <tr>
             <th>Sr no.</th>
             <th>Order Id</th>
             <th>Order Date Time</th>
-            <th>Customer no.</th>
+            <th>Customer Email</th>
             <th>Payment Method</th>
             <th>Grand Total</th>
             <th>Status</th>
@@ -44,39 +44,151 @@
         </tr>
         </thead>
         <tbody id="orderdata">
-        <?php
-        date_default_timezone_set("Asia/Kolkata");
-        $currentDateTime = date('Y-m-d');
-        $k = 0;
-        $order = "SELECT * FROM `order` where date(datetime)='$currentDateTime' and staffname='$email'";
-        $result = mysqli_query($conn, $order);
-        while ($bill = mysqli_fetch_array($result)) {
-            $k++;
-            ?>
-        <tr>
-            <td><?php echo $k; ?></td>
-            <td><?php echo $bill["orderid"]; ?></td>
-            <td><?php echo $bill["datetime"]; ?></td>
-            <td><?php echo $bill["mobile"]; ?></td>
-            <td><?php echo $bill["paymentmode"]; ?></td>
-            <td><i class="fa fa-rupee"></i>&nbsp;<?php echo $bill["amount"]; ?></td>
-            <td><?php echo $bill["status"]; ?></td>
-            <td><a href="billdetail.php?q=<?php echo $bill[" orderid"]; ?>"><i class="fa fa-s15 fa-info-circle"></i></a>
-            </td>
-        </tr>
-        <?php
-        }
-        ?>
         </tbody>
     </table>
 
+
+    <!-- The Modal -->
+    <div class="modal" id="mymodaldetail">
+        <div class="modal-dialog modal-lg modal-sm">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Order Detail</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <table class="table table-striped table-bordered table-sm">
+                        <thead>
+                        <tr>
+                            <th>Sr&nbsp;no.</th>
+                            <th>Product&nbsp;Name</th>
+                            <th>Price</th>
+                            <th>Discount&nbsp;(&nbsp;in&nbsp;%)</th>
+                            <th>Quantity</th>
+                            <th>Net&nbsp;Price</th>
+                            <th>Status</th>
+                            <th>Photo</th>
+                        </tr>
+                        </thead>
+                        <tbody id="detaildata">
+                        </tbody>
+
+                    </table>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
 </div>
+
+
 <%- include('../footer2') %>
 <script>
+    var temptable;
+
+    function viewmyorder() {
+        let formdata = new FormData();
+        formdata.append("action", "myorder");
+        var xml = new XMLHttpRequest();
+        xml.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var ar = JSON.parse(this.response);
+                console.log(ar);
+                var tab = "";
+                var srno = 1;
+                for (var x in ar) {
+                    obj = ar[x];
+                    tab += "<tr>";
+                    tab += "<td>" + srno + "</td>";
+                    tab += "<td>" + obj.orderid + "</td>";
+                    tab += "<td>" + obj.datetime + "</td>";
+                    tab += "<td>" + obj.mobile + "</td>";
+                    tab += "<td>" + obj.paymentmode + "</td>";
+                    tab += "<td><i class='fa fa-rupee'></i>&nbsp;" + obj.amount + "</td>";
+                    tab += "<td class='text-capitalize'>" + obj.status + "</td>";
+                    tab += "<td><i onclick='viewmyorderdetail(\"" + obj.orderid + "\")'" + "class='fa fa-info-circle' style='cursor: pointer;'></i></td>";
+                    tab += "</tr>";
+                    srno++;
+                }
+
+                document.getElementById("orderdata").innerHTML = tab;
+                try {
+                    if (temptable != undefined) {
+                        temptable.destroy();
+                    }
+                    temptable = $("#order").dataTable({
+                        "bPaginate": false
+                    });
+                } catch (e) {
+
+                }
+            } else {
+                document.getElementById("orderdata").innerHTML = "<span class='spinner-border'></span>";
+            }
+        };
+        xml.open("POST", "./staffaction", true);
+        xml.send(formdata);
+    }
+
+    function viewmyorderdetail(orderid) {
+        let formdata = new FormData();
+        formdata.append("orderid", orderid);
+        formdata.append("action", "myorderdetail");
+        var xml = new XMLHttpRequest();
+        xml.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var ar = JSON.parse(this.response);
+                console.log(ar);
+                var tab = "";
+                var srno = 1;
+                for (var x in ar) {
+                    obj = ar[x];
+                    tab += "<tr>";
+                    tab += "<td>" + srno + "</td>";
+                    tab += "<td>" + obj.productname + "</td>";
+                    tab += "<td><i class='fa fa-rupee'></i>&nbsp;" + obj.price + "</td>";
+                    tab += "<td>" + obj.discount + " %</td>";
+                    tab += "<td>" + obj.qty + "</td>";
+                    tab += "<td><i class='fa fa-rupee'></i>&nbsp;" + obj.netprice + "</td>";
+                    tab += "<td class='text-capitalize'>" + obj.status + "</td>";
+                    tab += "<td><img src='../" + obj.photo + "' style='height: 90px;width: 90px' alt=''>";
+                    tab += "</tr>";
+                    srno++;
+                }
+
+                document.getElementById("detaildata").innerHTML = tab;
+                try {
+                    if (temptable != undefined) {
+                        temptable.destroy();
+                    }
+                    temptable = $("#order").dataTable({
+                        "bPaginate": false
+                    });
+                } catch (e) {
+
+                }
+                $("#mymodaldetail").modal("show");
+            } else {
+                document.getElementById("detaildata").innerHTML = "<span class='spinner-border'></span>";
+            }
+        };
+        xml.open("POST", "./staffaction", true);
+        xml.send(formdata);
+    }
 
     $(document).ready(function () {
         checksession();
         checkcart();
+        viewmyorder();
     })
 </script>
 </body>

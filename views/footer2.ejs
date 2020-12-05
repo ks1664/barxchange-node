@@ -101,21 +101,34 @@
 
 <script>
     function checksession() {
-        // alert();
         let formdata = new FormData();
         formdata.append("action", "checksession");
         var xml = new XMLHttpRequest();
         xml.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
                 var session = this.responseText;
-                // alert(session);
-                // console.log(ar);
-                if (session == "session_empty") {
+                var staffdata = JSON.parse(this.responseText);
+                if (staffdata.name == "") {
                     window.location.href = "/users/stafflogin";
                 } else {
-                    document.getElementById("staffsession").innerHTML = "Hi, " + session;
-                    document.getElementById("staffsession2").innerHTML = "Hi, " + session;
-                    // document.getElementById("emailid").value = session;
+                    if (staffdata.type == "Captain") {
+                        document.getElementById('kitchenorder').style.display = "None";
+                        document.getElementById('cashierorder').style.display = "None";
+                        document.getElementById('cashierdailyorder').style.display = "None";
+                    } else if (staffdata.type == "Kitchen") {
+                        document.getElementById('cashierorder').style.display = "None";
+                        document.getElementById('cashierdailyorder').style.display = "None";
+                        document.getElementById('menu').style.display = "None";
+                        document.getElementById('captainorder').style.display = "None";
+                        document.getElementById('cart').style.display = "None";
+                    } else if (staffdata.type == "Cashier") {
+                        document.getElementById('kitchenorder').style.display = "None";
+                        document.getElementById('menu').style.display = "None";
+                        document.getElementById('captainorder').style.display = "None";
+                        document.getElementById('cart').style.display = "None";
+                    }
+                    document.getElementById("staffsession").innerHTML = "Hi, " + staffdata.name;
+                    document.getElementById("staffsession2").innerHTML = staffdata.name;
                 }
             } else {
                 document.getElementById("staffsession").innerHTML = "<span class='spinner-border'></span>";

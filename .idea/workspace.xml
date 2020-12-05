@@ -20,11 +20,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="817141e3-a89d-47a0-8478-7b1bb607accc" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/views/staff/myorder.ejs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/views/staff/kitchenorder.ejs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/www" beforeDir="false" afterPath="$PROJECT_DIR$/bin/www" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/connection.js" beforeDir="false" afterPath="$PROJECT_DIR$/connection.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/users.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/users.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/staff/thanks.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/staff/thanks.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/staff/viewcart.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/staff/viewcart.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/footer2.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/footer2.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/staff/myorder.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/staff/myorder.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/staff/staffheader.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/staff/staffheader.ejs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,7 +57,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="javascript.nodejs.core.library.configured.version" value="14.15.1" />
     <property name="javascript.nodejs.core.library.typings.version" value="14.14.10" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../node_project" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/views/staff" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -67,16 +70,16 @@
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\barxchangenode\views" />
-      <recent name="D:\barxchangenode\views\staff" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\barxchangenode\views\staff" />
       <recent name="D:\barxchangenode\views" />
       <recent name="D:\barxchangenode\public\photo" />
       <recent name="D:\barxchangenode\views\admin" />
       <recent name="D:\node_projects\barxchangenode\views\admin" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\barxchangenode\views" />
+      <recent name="D:\barxchangenode\views\staff" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -128,6 +131,9 @@
       <workItem from="1607057501507" duration="409000" />
       <workItem from="1607058037143" duration="978000" />
       <workItem from="1607059667903" duration="452000" />
+      <workItem from="1607060260535" duration="4046000" />
+      <workItem from="1607084199734" duration="24000" />
+      <workItem from="1607142969497" duration="17672000" />
     </task>
     <task id="LOCAL-00001" summary="staff_login">
       <created>1605781519821</created>
@@ -266,7 +272,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/routes/users.js</url>
-          <line>48</line>
+          <line>52</line>
           <option name="timeStamp" value="4" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
@@ -276,8 +282,14 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/routes/users.js</url>
-          <line>103</line>
+          <line>123</line>
           <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/routes/users.js</url>
+          <line>166</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="7" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

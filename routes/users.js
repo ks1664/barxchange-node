@@ -26,6 +26,10 @@ router.get("/staff_changepassword", (req, res) => {
     res.render("staff/staff_changepassword.ejs")
 })
 
+router.get("/kitchenorder", (req, res) => {
+    res.render("staff/kitchenorder.ejs")
+})
+
 router.get("/stafflogout", (req, res) => {
     Session.staff = "";
     // console.log(Session.staff);
@@ -48,7 +52,6 @@ router.get('/myorder', function (req, res) {
 })
 
 router.post("/staffaction", (req, res) => {
-
         let action = req.body.action;
         let Query = '';
 
@@ -89,29 +92,42 @@ router.post("/staffaction", (req, res) => {
             })
 
         } else if (action == "myorder") {
-            let currentDateTime = cdate.getFullYear() + '-' + cdate.getMonth() + '-' + cdate.getDate() + ':' + cdate.getHours() + ':' + cdate.getSeconds();
-            Query = "SELECT * FROM `order` where date(datetime)='" + currentDateTime + "' and staffname='" + Session.staff + "'";
+            let staff = Session.staff
+            let cdate = new Date();
+            let currentDateTime = cdate.getFullYear() + '-' + cdate.getMonth() + '-' + cdate.getDate();
+            Query = "SELECT * FROM `order` where date(datetime)='" + currentDateTime + "' and staffname='" + staff + "'";
+            console.log(currentDateTime);
+            console.log(Query);
             conn.query(Query, function (err, rows) {
                 if (err) throw  err;
+                // console.log(rows);
+                res.send(rows);
+            })
+
+        } else if (action == "myorderdetail") {
+            let orderid = req.body.orderid;
+            Query = "SELECT * FROM `orderdetail` INNER JOIN `order` on orderdetail.orderid = `order`.orderid INNER JOIN product ON orderdetail.productid=product.productid where orderdetail.orderid='" + orderid + "'";
+            console.log(Query);
+            conn.query(Query, function (err, rows) {
+                if (err) throw  err;
+                // console.log(rows);
                 res.send(rows);
             })
 
         } else if (action == "checksession") {
             if (Session.staff != "" && Session.staff != null) {
-                res.send(Session.staff);
+                let staff = {"name": Session.staff, "type": Session.type};
+                res.send(staff);
             } else {
-                res.send('session_empty');
+                let empty = {"name": ""}
+                res.send(empty);
             }
         }
     }
 )
 router.post("/menuaction", (req, res) => {
-
         let action = req.body.action;
-
-
         let Query = '';
-
         if (action == "categoryview") {
             Query = "select * from category";
             conn.query(Query, function (err, rows) {
@@ -328,4 +344,32 @@ router.post("/checkout", (req, res) => {
 })
 
 
+router.post("/kitchenaction", (req, res) => {
+        let action = req.body.action;
+        let Query = '';
+        if (action == "myorder") {
+            let staff = Session.staff
+            let cdate = new Date();
+            let currentDateTime = cdate.getFullYear() + '-' + cdate.getMonth() + '-' + cdate.getDate();
+            Query = "SELECT *,DATE(order.datetime) FROM `order` INNER JOIN orderdetail ON order.orderid=orderdetail.orderid WHERE order.status !='completed' AND DATE(order.datetime)='"+currentDateTime+"' and orderdetail.status!='delivered' group BY orderdetail.orderid";
+            // console.log(currentDateTime);
+            console.log(Query);
+            conn.query(Query, function (err, rows) {
+                if (err) throw  err;
+                console.log(rows);
+                res.send(rows);
+            })
+
+        } else if (action == "myorderdetail") {
+            let orderid = req.body.orderid;
+            Query = "SELECT * FROM `orderdetail` INNER JOIN `order` on orderdetail.orderid = `order`.orderid INNER JOIN product ON orderdetail.productid=product.productid where orderdetail.orderid='" + orderid + "'";
+            console.log(Query);
+            conn.query(Query, function (err, rows) {
+                if (err) throw  err;
+                // console.log(rows);
+                res.send(rows);
+            })
+        }
+    }
+)
 module.exports = router;
