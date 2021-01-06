@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>View Daily Orders</title>
+    <%- include('../headerfiles') %>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $(function () {
+            $("#tabs").tabs();
+        });
+    </script>
+</head>
+<body>
+<%- include('adminheader') %>
+<div class="container-fluid">
+    <br>
+    <br>
+    <br>
+    <!--    <div class="home">-->
+    <!--        <div class="parallax_background parallax-window" data-parallax="scroll" data-image-src="images/menu.jpg"-->
+    <!--             data-speed="0.8"></div>-->
+    <!--        <div class="home_container">-->
+    <!--            <div class="container">-->
+    <!--                <div class="row">-->
+    <!--                    <div class="col">-->
+    <!--                        <div class="home_content text-center">-->
+    <!--                            <div class="home_subtitle page_subtitle">The Venue</div>-->
+    <!--                            <div class="home_title"><h1>All Orders</h1></div>-->
+    <!--                        </div>-->
+    <!--                    </div>-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--        </div>-->
+    <!--    </div>-->
+    <div class="row justify-content-around">
+        <h3> All Orders</h3>
+    </div>
+    <div id="tabs">
+        <ul>
+            <li><a href="#tabs-1">Pending</a></li>
+            <li><a href="#tabs-2">Paid</a></li>
+        </ul>
+        <div id="tabs-1">
+            <div class="table-responsive">
+                <table id="mypay1" class="table table-bordered mt-4">
+                    <thead>
+                    <tr>
+                        <th>Sr no.</th>
+                        <th>Order Id</th>
+                        <th>Order Date Time</th>
+                        <th>Customer no.</th>
+                        <th>Payment Method</th>
+                        <th>Grand Total</th>
+                        <th>Status</th>
+                        <th>View Detail</th>
+                    </tr>
+                    </thead>
+                    <tbody id="pending">
+                    <?php
+                    date_default_timezone_set("Asia/Kolkata");
+                    $currentDateTime = date('Y-m-d');
+                    $k = 0;
+                    $order = "SELECT `order`.* FROM `order` INNER JOIN orderdetail ON order.orderid=orderdetail.orderid WHERE order.status ='pending' and orderdetail.status ='delivered' group BY orderdetail.orderid";
+
+                    //                    $order = "SELECT * FROM `order` where date(datetime)='$currentDateTime' and status='pending'";
+                    $result = mysqli_query($conn, $order);
+                    while ($bill = mysqli_fetch_array($result)) {
+                        $k++;
+                        ?>
+                    <tr>
+                        <td><?php echo $k; ?></td>
+                        <td><?php echo $bill["orderid"]; ?></td>
+                        <td><?php echo $bill["datetime"]; ?></td>
+                        <td><?php echo $bill["mobile"]; ?></td>
+                        <td><?php echo $bill["paymentmode"]; ?></td>
+                        <td><i class="fa fa-rupee"></i>&nbsp;<?php echo $bill["amount"]; ?></td>
+                        <td><?php echo $bill["status"]; ?></td>
+                        <td><a href="adminbilldetail.php?q=<?php echo $bill[" orderid"]; ?>"><i
+                                    class="fa fa-s15 fa-info-circle"></i></a>
+                        </td>
+                    </tr>
+                    <?php
+                    }
+                    ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div id="tabs-2">
+            <div class="table-responsive">
+                <table id="mypay2" class="table table-bordered mt-4">
+                    <thead>
+                    <tr>
+                        <th>Sr no.</th>
+                        <th>Order Id</th>
+                        <th>Order Date Time</th>
+                        <th>Customer no.</th>
+                        <th>Payment Method</th>
+                        <th>Grand Total</th>
+                        <th>Status</th>
+                        <th>View Detail</th>
+                    </tr>
+                    </thead>
+                    <tbody id="paid">
+                    <?php
+                    date_default_timezone_set("Asia/Kolkata");
+                    $currentDateTime = date('Y-m-d');
+                    $k = 0;
+                    $order = "SELECT `order`.* FROM `order` INNER JOIN orderdetail ON order.orderid=orderdetail.orderid WHERE order.status ='paid' and orderdetail.status ='delivered' group BY orderdetail.orderid";
+
+                    //                    $order = "SELECT * FROM `order` where date(datetime)='$currentDateTime' and status='paid'";
+                    $result = mysqli_query($conn, $order);
+                    while ($bill = mysqli_fetch_array($result)) {
+                        $k++;
+                        ?>
+                    <tr>
+                        <td><?php echo $k; ?></td>
+                        <td><?php echo $bill["orderid"]; ?></td>
+                        <td><?php echo $bill["datetime"]; ?></td>
+                        <td><?php echo $bill["mobile"]; ?></td>
+                        <td><?php echo $bill["paymentmode"]; ?></td>
+                        <td><i class="fa fa-rupee"></i>&nbsp;<?php echo $bill["amount"]; ?></td>
+                        <td><?php echo $bill["status"]; ?></td>
+                        <td><a href="adminbilldetail.php?q=<?php echo $bill[" orderid"]; ?>"><i
+                                    class="fa fa-s15 fa-info-circle"></i></a>
+                        </td>
+                    </tr>
+                    <?php
+                    }
+                    ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="myModaldetail">
+        <div class="modal-dialog modal-lg modal-sm">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Order Detail</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table id="detail" class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th>Sr no.</th>
+                                <th>Product Name</th>
+                                <th>Price</th>
+                                <th>Discount ( in %)</th>
+                                <th>Quantity</th>
+                                <th>Net Price</th>
+                                <th>Status</th>
+                                <th>Photo</th>
+                            </tr>
+                            </thead>
+                            <tbody id="orderdetail">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+<%- include('../footer') %>
+
+<script src="datatable/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" href="datatable/jquery.dataTables.css">
+<script>
+    var temptable1;
+    var temptable2;
+    var temptable3;
+
+    function viewmyorder() {
+        let formdata = new FormData();
+        formdata.append("action", "myorder");
+        var xml = new XMLHttpRequest();
+        xml.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var ar = JSON.parse(this.response);
+                console.log(ar);
+                var paidtab = "";
+                var pendingtab = "";
+                var paidsrno = 1;
+                var pendingsrno = 1;
+                for (var x in ar) {
+                    obj = ar[x];
+                    if (obj.status == "pending") {
+                        pendingtab += "<tr>";
+                        pendingtab += "<td>" + pendingsrno + "</td>";
+                        pendingtab += "<td>" + obj.orderid + "</td>";
+                        pendingtab += "<td>" + obj.datetime + "</td>";
+                        pendingtab += "<td>" + obj.mobile + "</td>";
+                        pendingtab += "<td>" + obj.paymentmode + "</td>";
+                        pendingtab += "<td><i class='fa fa-rupee'></i>&nbsp;" + obj.amount + "</td>";
+                        pendingtab += "<td class='text-capitalize'>" + obj.status + "</td>";
+                        pendingtab += "<td><i onclick='viewmyorderdetail(\"" + obj.orderid + "\")'" + "class='fa fa-info-circle' style='cursor: pointer;'></i></td>";
+                        pendingtab += "</tr>";
+                        pendingsrno++;
+                    } else if (obj.status == "paid") {
+                        paidtab += "<tr>";
+                        paidtab += "<td>" + paidsrno + "</td>";
+                        paidtab += "<td>" + obj.orderid + "</td>";
+                        paidtab += "<td>" + obj.datetime + "</td>";
+                        paidtab += "<td>" + obj.mobile + "</td>";
+                        paidtab += "<td>" + obj.paymentmode + "</td>";
+                        paidtab += "<td><i class='fa fa-rupee'></i>&nbsp;" + obj.amount + "</td>";
+                        paidtab += "<td class='text-capitalize'>" + obj.status + "</td>";
+                        paidtab += "<td><i onclick='viewmyorderdetail(\"" + obj.orderid + "\")'" + "class='fa fa-info-circle' style='cursor: pointer;'></i></td>";
+                        paidtab += "</tr>";
+                        paidsrno++;
+                    }
+                }
+
+                document.getElementById("pending").innerHTML = pendingtab;
+                document.getElementById("paid").innerHTML = paidtab;
+                try {
+                    if (temptable1 != undefined) {
+                        temptable1.destroy();
+                    }
+                    temptable1 = $("#mypay1").dataTable({
+                        // "bPaginate": false
+                    });
+                } catch (e) {
+
+                }
+                try {
+                    if (temptable2 != undefined) {
+                        temptable2.destroy();
+                    }
+                    temptable2 = $("#mypay2").dataTable({
+                        // "bPaginate": false
+                    });
+                } catch (e) {
+
+                }
+            } else {
+                document.getElementById("pending").innerHTML = "<span class='spinner-border'></span>";
+                document.getElementById("paid").innerHTML = "<span class='spinner-border'></span>";
+            }
+        };
+        xml.open("POST", "./orderaction", true);
+        xml.send(formdata);
+    }
+
+    function viewmyorderdetail(orderid) {
+        $("#myModaldetail").modal("show");
+        let formdata = new FormData();
+        formdata.append("orderid", orderid);
+        formdata.append("action", "myorderdetail");
+        var xml = new XMLHttpRequest();
+        xml.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var ar = JSON.parse(this.response);
+                console.log(ar);
+                var tab = "";
+                var srno = 1;
+                for (var x in ar) {
+                    obj = ar[x];
+                    tab += "<tr>";
+                    tab += "<td>" + srno + "</td>";
+                    tab += "<td>" + obj.productname + "</td>";
+                    tab += "<td><i class='fa fa-rupee'></i>&nbsp;" + obj.price + "</td>";
+                    tab += "<td>" + obj.discount + " %</td>";
+                    tab += "<td>" + obj.qty + "</td>";
+                    tab += "<td><i class='fa fa-rupee'></i>&nbsp;" + obj.netprice + "</td>";
+                    tab += "<td class='text-capitalize'>" + obj.status + "</td>";
+                    tab += "<td><img src='../" + obj.photo + "' style='height: 90px;width: 90px' alt=''>";
+                    tab += "</tr>";
+                    srno++;
+                }
+                document.getElementById("orderdetail").innerHTML = tab;
+                try {
+                    if (temptable3 != undefined) {
+                        temptable3.destroy();
+                    }
+                    temptable3 = $("#detail").dataTable({
+                        "bPaginate": false
+                    });
+                } catch (e) {
+
+                }
+            } else {
+                document.getElementById("orderdetail").innerHTML = "<span class='spinner-border'></span>";
+            }
+        };
+        xml.open("POST", "./orderaction", true);
+        xml.send(formdata);
+    }
+
+
+    $(document).ready(function () {
+        checksession();
+        viewmyorder();
+    })
+</script>
+
+</body>
+</html>
+<?php

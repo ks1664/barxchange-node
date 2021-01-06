@@ -4,6 +4,7 @@ var router = express.Router();
 var conn = require('../connection')
 const save_file_on_server = require('../uploadfile')
 const nodemailer = require('nodemailer');
+// import waterfall from 'async/waterfall';
 /* GET users listing. */
 router.get('/index', function (req, res, next) {
     res.send('respond with a resource');
@@ -43,6 +44,7 @@ router.get('/viewcart', function (req, res) {
         res.render("staff/menu.ejs")
     }
 })
+
 router.get('/thanks', function (req, res) {
     res.render("staff/thanks.ejs")
 })
@@ -51,10 +53,13 @@ router.get('/myorder', function (req, res) {
     res.render("staff/myorder.ejs")
 })
 
+router.get('/cashierorder', function (req, res) {
+    res.render("staff/cashierorder.ejs")
+})
+
 router.post("/staffaction", (req, res) => {
         let action = req.body.action;
         let Query = '';
-
         if (action == "login") {
             let username = req.body.username;
             let password = req.body.password;
@@ -125,6 +130,7 @@ router.post("/staffaction", (req, res) => {
         }
     }
 )
+
 router.post("/menuaction", (req, res) => {
         let action = req.body.action;
         let Query = '';
@@ -317,9 +323,9 @@ router.post("/checkout", (req, res) => {
         }
         let Query = "";
         if (paymentmode == "Cash") {
-            Query = "INSERT INTO `order`(`orderid`, `amount`, `datetime`, `status`, `paymentmode`, `mobile`, `staffname`) VALUES (null ,'" + String(grandtotal) + "','" + currentdatetime + "','pending','" + paymentmode + "','" + mobile + "','" + staff + "')";
+            Query = "INSERT INTO `order`(`orderid`, `amount`, `datetime`, `status`, `paymentmode`, `mobile`, `staffname`) VALUES (null ,'" + grandtotal + "','" + currentdatetime + "','pending','" + paymentmode + "','" + mobile + "','" + staff + "')";
         } else {
-            Query = "INSERT INTO `order`(`orderid`, `amount`, `datetime`, `status`, `paymentmode`, `mobile`, `staffname`) VALUES (null ,'" + grandTotal + "','" + currentdatetime + "','paid','" + paymentmode + "','" + mobile + "','" + staff + "')";
+            Query = "INSERT INTO `order`(`orderid`, `amount`, `datetime`, `status`, `paymentmode`, `mobile`, `staffname`) VALUES (null ,'" + grandtotal + "','" + currentdatetime + "','paid','" + paymentmode + "','" + mobile + "','" + staff + "')";
         }
         conn.query(Query, function (err, result, fields) {
                 if (err) throw  err;
@@ -343,33 +349,125 @@ router.post("/checkout", (req, res) => {
     }
 })
 
-
 router.post("/kitchenaction", (req, res) => {
         let action = req.body.action;
         let Query = '';
-        if (action == "myorder") {
+        if (action === "myorder") {
             let staff = Session.staff
             let cdate = new Date();
             let currentDateTime = cdate.getFullYear() + '-' + cdate.getMonth() + '-' + cdate.getDate();
-            Query = "SELECT *,DATE(order.datetime) FROM `order` INNER JOIN orderdetail ON order.orderid=orderdetail.orderid WHERE order.status !='completed' AND DATE(order.datetime)='"+currentDateTime+"' and orderdetail.status!='delivered' group BY orderdetail.orderid";
-            // console.log(currentDateTime);
-            console.log(Query);
+            // Query = "SELECT distinct order.orderid FROM `order` INNER JOIN orderdetail ON order.orderid=orderdetail.orderid WHERE order.status !='completed' AND DATE(order.datetime)='" + currentDateTime + "' and orderdetail.status!='delivered' group BY orderdetail.orderid";
+            Query = "select * from `order` where orderid in (SELECT distinct order.orderid FROM `order` INNER JOIN orderdetail ON order.orderid=orderdetail.orderid WHERE order.status !='completed' AND DATE(order.datetime)='" + currentDateTime + "' and orderdetail.status!='delivered')";
+            // console.log(Query);
+            let count = 0;
             conn.query(Query, function (err, rows) {
                 if (err) throw  err;
-                console.log(rows);
+                let order = rows;
+                let data = []
+                // console.log(order.length + ' length')
+                for (let i = 0; i < order.length; i++) {
+                    let orderdata = order[i];
+                    Query = "select * from orderdetail inner join product on product.productid=orderdetail.productid where orderdetail.orderid='" + order[i].orderid + "'";
+                    // console.log(Query);
+
+                    conn.query(Query, function (err, rows) {
+                        if (err) throw  err;
+                        data.push({order: orderdata, orderdetail: rows});
+                        count++;
+                        // console.log(count)
+
+                        if (count == order.length) {
+                            // console.log("match");
+                            // console.log(data);
+                            res.send(data);
+                        }
+                    })
+                }
+            })
+
+            // res.send(rows);
+
+        } else {
+            let orderid = req.body.orderid;
+            let typeid = req.body.typeid;
+            if (typeid == "orderdetail") {
+
+                Query = "select * from orderdetail where orderdetailid='" + orderid + "'";
+                console.log(Query);
+                conn.query(Query, function (err, rows) {
+                    if (err) throw  err;
+                    let orderdata = rows;
+                    console.log("---->>>>" + orderdata);
+                    console.log("---->>>>" + orderdata['status']);
+                    console.log("---->>>>" + orderdata.status);
+                    if (orderdata[0].status == "cooked") {
+                        Query = "UPDATE `orderdetail` SET `status`='delivered' WHERE `orderdetailid`='" + orderid + "'";
+                        console.log(Query);
+                        conn.query(Query, function (err) {
+                            console.log("error --> " + err);
+                        })
+                    } else if (orderdata[0].status == "pending") {
+                        Query = "UPDATE `orderdetail` SET `status`='cooked' WHERE `orderdetailid`='" + orderid + "'";
+                        console.log(Query);
+                        conn.query(Query, function (err) {
+                            console.log("error --> " + err);
+                        })
+                    } else {
+                        console.log("No idea");
+                    }
+                })
+            } else {
+                Query = "UPDATE `orderdetail` SET `status`='delivered' WHERE `orderid`='" + orderid + "'";
+                console.log(Query);
+                conn.query(Query, function (err) {
+                    console.log("error --> " + err);
+                })
+            }
+            res.send("Status Updated Successfully");
+
+        }
+    }
+)
+
+
+router.post("/cashieraction", (req, res) => {
+        let action = req.body.action;
+        let Query = '';
+        if (action == "changestatus") {
+            let orderid = req.body.orderid;
+            Query = "UPDATE `order` SET `status`='paid' WHERE `orderid`='" + orderid + "'";
+            conn.query(Query, function (err) {
+                if (err) throw  err;
+                res.send(Session.staff + " Payment Recieved Successfully for Order no. " + orderid);
+            })
+
+        } else if (action == "myorder") {
+            let staff = Session.staff
+            let cdate = new Date();
+            let currentDateTime = cdate.getFullYear() + '-' + cdate.getMonth() + '-' + cdate.getDate();
+            Query = "SELECT `order`.* FROM `order` INNER JOIN orderdetail ON order.orderid=orderdetail.orderid WHERE orderdetail.status ='delivered' group BY orderdetail.orderid order by(orderid) DESC";
+            // Query = "SELECT `order`.* FROM `order` INNER JOIN orderdetail ON order.orderid=orderdetail.orderid WHERE order.status ='pending' and orderdetail.status ='delivered' group BY orderdetail.orderid";
+            // console.log(currentDateTime);
+            // console.log(Query);
+            conn.query(Query, function (err, rows) {
+                if (err) throw  err;
+                // console.log(rows);
                 res.send(rows);
             })
 
         } else if (action == "myorderdetail") {
             let orderid = req.body.orderid;
-            Query = "SELECT * FROM `orderdetail` INNER JOIN `order` on orderdetail.orderid = `order`.orderid INNER JOIN product ON orderdetail.productid=product.productid where orderdetail.orderid='" + orderid + "'";
+            Query = "SELECT * FROM `orderdetail` INNER JOIN product ON orderdetail.productid=product.productid where orderdetail.orderid='" + orderid + "'";
             console.log(Query);
             conn.query(Query, function (err, rows) {
                 if (err) throw  err;
                 // console.log(rows);
                 res.send(rows);
             })
+
         }
     }
 )
+
+
 module.exports = router;

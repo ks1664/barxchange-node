@@ -19,14 +19,18 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="817141e3-a89d-47a0-8478-7b1bb607accc" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/views/staff/kitchenorder.ejs" afterDir="false" />
+    <list default="true" id="817141e3-a89d-47a0-8478-7b1bb607accc" name="Default Changelist" comment="menu complete">
+      <change afterPath="$PROJECT_DIR$/barxchange (1).sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/views/admin/allorder.ejs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/views/staff/cashierorder.ejs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/www" beforeDir="false" afterPath="$PROJECT_DIR$/bin/www" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/connection.js" beforeDir="false" afterPath="$PROJECT_DIR$/connection.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/admin.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/admin.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/users.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/users.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/admin/adminheader.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/adminheader.ejs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/footer2.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/footer2.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/staff/myorder.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/staff/myorder.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/staff/kitchenorder.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/staff/kitchenorder.ejs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/staff/staffheader.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/staff/staffheader.ejs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -54,10 +58,11 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="javascript.nodejs.core.library.configured.version" value="14.15.1" />
     <property name="javascript.nodejs.core.library.typings.version" value="14.14.10" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/views/staff" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -71,11 +76,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\barxchangenode" />
+      <recent name="D:\barxchangenode\views\admin" />
       <recent name="D:\barxchangenode\views\staff" />
       <recent name="D:\barxchangenode\views" />
       <recent name="D:\barxchangenode\public\photo" />
-      <recent name="D:\barxchangenode\views\admin" />
-      <recent name="D:\node_projects\barxchangenode\views\admin" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\barxchangenode\views" />
@@ -133,7 +138,44 @@
       <workItem from="1607059667903" duration="452000" />
       <workItem from="1607060260535" duration="4046000" />
       <workItem from="1607084199734" duration="24000" />
-      <workItem from="1607142969497" duration="17672000" />
+      <workItem from="1607142969497" duration="17881000" />
+      <workItem from="1607313144721" duration="11000" />
+      <workItem from="1607313183457" duration="5561000" />
+      <workItem from="1607487134464" duration="1118000" />
+      <workItem from="1607491613385" duration="5803000" />
+      <workItem from="1607573553240" duration="6384000" />
+      <workItem from="1607582032495" duration="3190000" />
+      <workItem from="1607588134131" duration="9994000" />
+      <workItem from="1607660391048" duration="8811000" />
+      <workItem from="1607752508513" duration="9629000" />
+      <workItem from="1607774379908" duration="1183000" />
+      <workItem from="1607918829820" duration="8598000" />
+      <workItem from="1608009404023" duration="5302000" />
+      <workItem from="1608027688339" duration="4429000" />
+      <workItem from="1608032588274" duration="9000" />
+      <workItem from="1608034182151" duration="33000" />
+      <workItem from="1608102616649" duration="3137000" />
+      <workItem from="1608112062952" duration="1185000" />
+      <workItem from="1608180062126" duration="1239000" />
+      <workItem from="1608266465422" duration="1254000" />
+      <workItem from="1608281620331" duration="3212000" />
+      <workItem from="1608355678237" duration="8079000" />
+      <workItem from="1608523435756" duration="369000" />
+      <workItem from="1608524158439" duration="595000" />
+      <workItem from="1608701641729" duration="2769000" />
+      <workItem from="1608961427751" duration="1392000" />
+      <workItem from="1609131343779" duration="67000" />
+      <workItem from="1609135476778" duration="4880000" />
+      <workItem from="1609152258020" duration="664000" />
+      <workItem from="1609218818431" duration="1265000" />
+      <workItem from="1609227804105" duration="596000" />
+      <workItem from="1609307981190" duration="10000" />
+      <workItem from="1609308088099" duration="651000" />
+      <workItem from="1609308758032" duration="3553000" />
+      <workItem from="1609388289337" duration="1167000" />
+      <workItem from="1609395388947" duration="1219000" />
+      <workItem from="1609402450018" duration="1980000" />
+      <workItem from="1609928854528" duration="529000" />
     </task>
     <task id="LOCAL-00001" summary="staff_login">
       <created>1605781519821</created>
@@ -233,7 +275,14 @@
       <option name="project" value="LOCAL" />
       <updated>1606557819395</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="menu complete">
+      <created>1607169850016</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1607169850016</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -262,18 +311,13 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/routes/admin.js</url>
-          <line>282</line>
+          <line>286</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/routes/admin.js</url>
-          <line>353</line>
+          <line>357</line>
           <option name="timeStamp" value="2" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/routes/users.js</url>
-          <line>52</line>
-          <option name="timeStamp" value="4" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/public/js/myscript.js</url>
@@ -282,13 +326,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/routes/users.js</url>
-          <line>123</line>
+          <line>128</line>
           <option name="timeStamp" value="6" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/routes/users.js</url>
-          <line>166</line>
-          <properties lambdaOrdinal="-1" />
+          <line>172</line>
           <option name="timeStamp" value="7" />
         </line-breakpoint>
       </breakpoints>

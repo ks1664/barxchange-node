@@ -43,6 +43,10 @@ router.get("/manageproduct", (req, res) => {
     res.render("admin/manage_product.ejs")
 })
 
+router.get("/allorder", (req, res) => {
+    res.render("admin/allorder.ejs")
+})
+
 
 router.post("/adminaction", (req, res) => {
 
@@ -448,6 +452,35 @@ router.post("/productaction", (req, res) => {
                 if (err) throw  err;
                 res.send('Product Updated Successfully');
             })
+        }
+    }
+)
+
+router.post("/orderaction", (req, res) => {
+        let action = req.body.action;
+        let Query = '';
+        if (action == "myorder") {
+            let cdate = new Date();
+            let currentDateTime = cdate.getFullYear() + '-' + cdate.getMonth() + '-' + cdate.getDate();
+            Query = "SELECT `order`.* FROM `order` INNER JOIN orderdetail ON order.orderid=orderdetail.orderid WHERE orderdetail.status ='delivered' group BY orderdetail.orderid order by(orderid) DESC";
+            // Query = "SELECT `order`.* FROM `order` INNER JOIN orderdetail ON order.orderid=orderdetail.orderid WHERE order.status ='pending' and orderdetail.status ='delivered' group BY orderdetail.orderid";
+            // console.log(currentDateTime);
+            // console.log(Query);
+            conn.query(Query, function (err, rows) {
+                if (err) throw  err;
+                // console.log(rows);
+                res.send(rows);
+            })
+        } else if (action == "myorderdetail") {
+            let orderid = req.body.orderid;
+            Query = "SELECT * FROM `orderdetail` INNER JOIN product ON orderdetail.productid=product.productid where orderdetail.orderid='" + orderid + "'";
+            console.log(Query);
+            conn.query(Query, function (err, rows) {
+                if (err) throw  err;
+                // console.log(rows);
+                res.send(rows);
+            })
+
         }
     }
 )

@@ -28,103 +28,111 @@
             </div>
         </div>
     </div>
+    <div class="justify-content-center row" id="output"></div>
     <div id="orderdata" class="container">
-        <div class="row justify-content-around">
-            <?php
-            $currentDateTime = date('Y-m-d');
-            $sqlorder = "SELECT *,DATE(order.datetime) FROM `order` INNER JOIN orderdetail ON order.orderid=orderdetail.orderid WHERE order.status !='completed' AND DATE(order.datetime)='$currentDateTime' and orderdetail.status!='delivered' group BY orderdetail.orderid";
-//                        echo $sqlorder;
-            $resultorder = mysqli_query($conn, $sqlorder);
-            if (mysqli_num_rows($resultorder) > 0) {
-            while ($orderrow = mysqli_fetch_array($resultorder)) {
-            $orderid = $orderrow["orderid"];
-            ?>
-            <div class="card col-sm-4 mr-1 mt-4 mb-4 bg-image">
-                <div class="card-header mx-auto">
-                    <h6>Order Time</h6>
-                    <h6><?php echo $orderrow["datetime"]; ?></h6>
-                </div>
-                <div class="card-body text-center">
-                    <p class="card-text">Order raised by: <?php echo $orderrow["staffname"]; ?></p>
-                    <p class="card-text">Order Detail</p>
-                    <div class="row">
-                        <div class="col-sm-4">
-                            <p><strong>Item Name</strong></p>
-                        </div>
-                        <div class="col-sm-4">
-                            <p class="card-text"><strong>Qty</strong></p>
-                        </div>
-                        <div class="col-sm-4 mb-2">
-                            <p><strong>Update Status</strong></p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <?php
-                                $sqldetail = "select * from orderdetail inner join product on product.productid=orderdetail.productid where orderid='$orderid' and status !='delivered'";
-                                //                                                            echo $sqldetail;
-                                $resultdetail = mysqli_query($conn, $sqldetail);
-                                while ($detailrow = mysqli_fetch_array($resultdetail)) {
-                                    ?>
-                        <div class="col-sm-4">
-                            <p class="<?php if ($detailrow[" status"] == "cooked") {
-                            echo "text-warning";
-                            } else {
-                            echo "text-primary";
-                            }
-                            ?>"><?php echo $detailrow["productname"]; ?></p>
-                            (<?php echo $detailrow["status"]; ?>)
-                        </div>
-                        <div class="col-sm-4">
-                            <p class="<?php if ($detailrow[" status"] == "cooked") {
-                            echo "text-warning";
-                            } else {
-                            echo "text-primary";
-                            }
-                            ?>"><?php echo $detailrow["qty"]; ?></p>
-                        </div>
-                        <div class="col-sm-4 mb-2">
-                            <a href="updateorderstatuskitchen.php?q=<?php echo $detailrow[" orderdetailid"];
-                            ?>&r=orderdetail"
-                            class="btn <?php if ($detailrow["status"] == "cooked") {
-                                               echo "btn-warning";
-                                           } else {
-                                               echo "btn-primary";
-                                           }
-                                           ?>">Update</a>
-                        </div>
-                        <?php
-                                }
-                                ?>
-                    </div>
-                </div>
-                <div class="card-footer mx-auto">
-                    <a href="updateorderstatuskitchen.php?q=<?php echo $orderid; ?>&r=order"
-                       class="btn btn-dark">Deliver
-                        All</a>
-                </div>
-            </div>
-            <?php
-                }
-            }
-            ?>
-        </div>
+        <!--        <div class="row justify-content-around">-->
+        <!--            <?php-->
+        <!--            $currentDateTime = date('Y-m-d');-->
+        <!--            $sqlorder = "SELECT *,DATE(order.datetime) FROM `order` INNER JOIN orderdetail ON order.orderid=orderdetail.orderid WHERE order.status !='completed' AND DATE(order.datetime)='$currentDateTime' and orderdetail.status!='delivered' group BY orderdetail.orderid";-->
+        <!--//                        echo $sqlorder;-->
+        <!--            $resultorder = mysqli_query($conn, $sqlorder);-->
+        <!--            if (mysqli_num_rows($resultorder) > 0) {-->
+        <!--            while ($orderrow = mysqli_fetch_array($resultorder)) {-->
+        <!--            $orderid = $orderrow["orderid"];-->
+        <!--            ?>-->
+        <!--            <div class="card col-sm-4 mr-1 mt-4 mb-4 bg-image">-->
+        <!--                <div class="card-header mx-auto">-->
+        <!--                    <h6>Order Time</h6>-->
+        <!--                    <h6><?php echo $orderrow["datetime"]; ?></h6>-->
+        <!--                </div>-->
+        <!--                <div class="card-body text-center">-->
+        <!--                    <p class="card-text">Order raised by: <?php echo $orderrow["staffname"]; ?></p>-->
+        <!--                    <p class="card-text">Order Detail</p>-->
+        <!--                    <div class="row">-->
+        <!--                        <div class="col-sm-4">-->
+        <!--                            <p><strong>Item Name</strong></p>-->
+        <!--                        </div>-->
+        <!--                        <div class="col-sm-4">-->
+        <!--                            <p class="card-text"><strong>Qty</strong></p>-->
+        <!--                        </div>-->
+        <!--                        <div class="col-sm-4 mb-2">-->
+        <!--                            <p><strong>Update Status</strong></p>-->
+        <!--                        </div>-->
+        <!--                    </div>-->
+        <!--                    <div class="row">-->
+        <!--                        <?php-->
+        <!--                                $sqldetail = "select * from orderdetail inner join product on product.productid=orderdetail.productid where orderid='$orderid' and status !='delivered'";-->
+        <!--                                //                                                            echo $sqldetail;-->
+        <!--                                $resultdetail = mysqli_query($conn, $sqldetail);-->
+        <!--                                while ($detailrow = mysqli_fetch_array($resultdetail)) {-->
+        <!--                                    ?>-->
+        <!--                        <div class="col-sm-4">-->
+        <!--                            <p class="<?php if ($detailrow[" status"] == "cooked") {-->
+        <!--                            echo "text-warning";-->
+        <!--                            } else {-->
+        <!--                            echo "text-primary";-->
+        <!--                            }-->
+        <!--                            ?>"><?php echo $detailrow["productname"]; ?></p>-->
+        <!--                            (<?php echo $detailrow["status"]; ?>)-->
+        <!--                        </div>-->
+        <!--                        <div class="col-sm-4">-->
+        <!--                            <p class="<?php if ($detailrow[" status"] == "cooked") {-->
+        <!--                            echo "text-warning";-->
+        <!--                            } else {-->
+        <!--                            echo "text-primary";-->
+        <!--                            }-->
+        <!--                            ?>"><?php echo $detailrow["qty"]; ?></p>-->
+        <!--                        </div>-->
+        <!--                        <div class="col-sm-4 mb-2">-->
+        <!--                            <a href="updateorderstatuskitchen.php?q=<?php echo $detailrow[" orderdetailid"];-->
+        <!--                            ?>&r=orderdetail"-->
+        <!--                            class="btn <?php if ($detailrow["status"] == "cooked") {-->
+        <!--                                               echo "btn-warning";-->
+        <!--                                           } else {-->
+        <!--                                               echo "btn-primary";-->
+        <!--                                           }-->
+        <!--                                           ?>">Update</a>-->
+        <!--                        </div>-->
+        <!--                        <?php-->
+        <!--                                }-->
+        <!--                                ?>-->
+        <!--                    </div>-->
+        <!--                </div>-->
+        <!--                <div class="card-footer mx-auto">-->
+        <!--                    <a href="updateorderstatuskitchen.php?q=<?php echo $orderid; ?>&r=order"-->
+        <!--                       class="btn btn-dark">Deliver-->
+        <!--                        All</a>-->
+        <!--                </div>-->
+        <!--            </div>-->
+        <!--            <?php-->
+        <!--                }-->
+        <!--            }-->
+        <!--            ?>-->
+        <!--        </div>-->
     </div>
     <%- include('../footer2') %>
 </div>
 <script>
     function viewmyorder() {
+        var ar;
         let formdata = new FormData();
         formdata.append("action", "myorder");
         var xml = new XMLHttpRequest();
         xml.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
-                var ar = JSON.parse(this.response);
+                ar = JSON.parse(this.response);
+                // console.log(ar);
+                // for (let x of ar) {
+                // console.log(x)
+                // console.log(x.order)
+                // console.log(x.orderdetail)
+                // }
                 var tab = "";
                 var srno = 1;
+                tab += "<div class='row justify-content-around'>";
                 if (ar.length > 0) {
-                    for (var x in ar) {
-                        obj = ar[x];
-                        tab += "<div class='row justify-content-around'>";
+                    for (let x of ar) {
+                        obj = x.order;
                         tab += "<div class='card col-sm-4 mr-1 mt-4 mb-4 bg-image'>";
                         tab += "<div class='card-header mx-auto'>";
                         tab += "<h6>Order Time</h6>";
@@ -133,7 +141,7 @@
                         tab += "<div class='card-body text-center'>";
                         tab += "<p class='card-text'>Order raised by: " + obj.staffname + "</p>";
                         tab += "<p class='card-text'>Order Detail</p>";
-                        tab += " <div class='row'>";
+                        tab += "<div class='row'>";
                         tab += "<div class='col-sm-4'>";
                         tab += "<p><strong>Item Name</strong></p>";
                         tab += "</div>";
@@ -144,27 +152,96 @@
                         tab += "<p><strong>Update&nbsp;Status</strong></p>";
                         tab += "</div>";
                         tab += "</div>";
-                        //
+                        tab += "<div class='row'>";
+                        for (var y of x.orderdetail) {
+                            nesobj = y;
+                            // obj = ar[x].order;
+                            tab += "<div class='col-sm-4'>";
+                            tab += "<p class='";
+                            if (nesobj.status == "cooked") {
+                                tab += "text-warning";
+                            } else if (nesobj.status == "delivered") {
+                                tab += "text-success";
+                            } else {
+                                tab += "text-primary";
+                            }
+                            tab += "'>" + nesobj.productname + "</p> (" + nesobj.status + ")";
+                            tab += "</div>";
+                            tab += "<div class='col-sm-4'>";
+                            tab += "<p class='";
+                            if (nesobj.status == "cooked") {
+                                tab += "text-warning";
+                            } else if (nesobj.status == "delivered") {
+                                tab += "text-success";
+                            } else {
+                                tab += "text-primary";
+                            }
+                            tab += "'>" + nesobj.qty + "</p>";
+                            tab += "</div>";
+                            tab += "<div class='col-sm-4 mb-2'>";
+                            tab += "<button type='button' id='button-" + nesobj.orderdetailid + "' onclick=\"updateorderstatuskitchen(" + nesobj.orderdetailid + ",'orderdetail')\" class='btn'>Update</button>";
+
+                            tab += "</div>";
+                        }
+                        tab += "</div>";
                         tab += "<div class='card-footer mx-auto'>";
-                        tab += "<button type='button' onclick=\"updateorderstatuskitchen(" + obj.orderid + ",'order')\" class='btn btn-dark'>Deliver All</a>";
+                        tab += "<button type='button' onclick=\"updateorderstatuskitchen(" + obj.orderid + ",'order')\" class='btn btn-dark'>Deliver All</button>";
                         tab += "</div>";
                         tab += "</div>";
                         tab += "</div>";
-                        tab += "</div>";
+                        // tab += "</div>";
                         srno++;
                     }
-                } else {
-                    tab += "<div class='row alert alert-warning'><h1> No Orders Yet</h1></div>";
                 }
+                tab += "</div>";
                 document.getElementById("orderdata").innerHTML = tab;
             } else {
-                document.getElementById("orderdata").innerHTML = "<span class='spinner-border'></span>";
+                document.getElementById("orderdata").innerHTML = "<div class='row alert alert-warning justify-content-center'><h1> No Orders Yet</h1></div>";
+            }
+            for (let x of ar) {
+                for (var z of x.orderdetail) {
+                    nesobj = z;
+                    if (nesobj.status == "cooked") {
+
+                        document.getElementById("button-" + nesobj.orderdetailid).className = "btn btn-warning";
+                    } else if (nesobj.status == "delivered") {
+                        document.getElementById("button-" + nesobj.orderdetailid).className = "btn btn-success";
+                    } else {
+                        document.getElementById("button-" + nesobj.orderdetailid).className = 'btn btn-primary';
+                    }
+                }
+            }
+
+        };
+        xml.open("POST", "./kitchenaction", true);
+        xml.send(formdata);
+    }
+
+    function updateorderstatuskitchen(orderid, typeid) {
+        // alert(orderid + "-----> " + typeid);
+        var formdata = new FormData();
+        formdata.append("orderid", orderid);
+        formdata.append("typeid", typeid);
+        formdata.append("action", "updatestatus");
+        var xml = new XMLHttpRequest();
+        xml.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var output = this.responseText;
+                alert(output);
+                document.getElementById("output").innerHTML = "<h3 class='text-danger'>" + output + "</h3>";
+                setInterval("movenextfunction()", 50000);
+                viewmyorder();
             }
         };
         xml.open("POST", "./kitchenaction", true);
         xml.send(formdata);
     }
 
+
+    function movenextfunction() {
+        document.getElementById('output').innerHTML = "";
+        viewmyorder();
+    }
 
     $(document).ready(function () {
         checksession();
